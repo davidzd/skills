@@ -1,0 +1,53 @@
+@size : 64px;
+@br : @size / 8;
+@p : 4px;
+body{
+  background: #444;
+}
+
+.killtext(){
+  text-indent: 100%;
+  white-space: nowrap;
+}
+
+.bear {background:url('http://i.imgur.com/kOu1QNU.png');}
+.boots{background:url('http://i.imgur.com/PvBWkUA.png');}
+.net{background:url('http://i.imgur.com/Hea3MKC.png');}
+
+
+
+.skilltree{
+  .skill{
+    .killtext();
+    position: relative;
+    text-align:center;
+    user-select:none;
+    cursor:pointer;
+    margin:@p * 2;
+    display : inline-block;
+    background-size: 100% auto;
+    width: @size;
+    height: @size;
+    &.active{
+      &:after{
+        background:none;
+        border-color:#fc0;
+      }
+    }
+    &:after{
+      background:rgba(0,0,0,0.6);
+      display: block;
+      content:'';
+      top: -@p;bottom: -@p;left: -@p;right: -@p;
+      position: absolute;
+      border-radius: @br;
+      border:@p solid #888;
+      box-shadow:
+        inset 0 0 @p * 4 rgba(0,0,0,0.5),
+        inset 0 0 @p,
+        0 0 @p
+    ;
+    }
+
+  }
+}
