@@ -1,0 +1,68 @@
+/*
+style.css file is generated from style.less file. Do not modify it directly - rarther install yourself
+the LESS CSSS preprocessor.
+*/
+body {
+  background: #444;
+}
+.wrap {
+  width: 128px;
+  margin: auto;
+}
+.bear {
+  background: url('http://i.imgur.com/kOu1QNU.png');
+}
+.boots {
+  background: url('http://i.imgur.com/PvBWkUA.png');
+}
+.net {
+  background: url('http://i.imgur.com/Hea3MKC.png');
+}
+.skilltree .skill {
+  font-size: 0;
+  position: relative;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  margin: 6px;
+  display: inline-block;
+  background-size: 100% auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px 3px;
+}
+.skilltree .skill span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  bottom: 3px;
+  right: 3px;
+  font-size: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2px 5px;
+  border-radius: 3px;
+  z-index: 2;
+}
+.skilltree .skill:after {
+  background: rgba(0, 0, 0, 0.6);
+  display: block;
+  content: '';
+  top: -3px;
+  bottom: -3px;
+  left: -3px;
+  right: -3px;
+  position: absolute;
+  border-radius: 8px;
+  border: 3px solid #888888;
+  box-shadow: inset 0 0 0 1px #ffffff, 0 0 0 1px #ffffff, inset 0 0 12px rgba(0, 0, 0, 0.5), inset 0 0 3px, 0 0 3px;
+}
+.skilltree .skill.available:after {
+  background: none;
+  border-color: #cc5;
+  box-shadow: inset 0 0 0 1px #ffff00, 0 0 0 1px #ffff00, inset 0 0 2px 2px #000000, 0 0 10px 1px #ffff55, inset 0 0 3px 1px #ffff55, inset 0 0 5px 2px rgba(255, 255, 255, 0.5), inset 0 0 12px rgba(0, 0, 0, 0.5), inset 0 0 3px, 0 0 3px;
+}
+.skilltree .skill.active:after {
+  background: none;
+  border-color: #fc0;
+}
