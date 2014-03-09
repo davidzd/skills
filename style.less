@@ -24,8 +24,6 @@ body{
 .net{background:url('http://i.imgur.com/Hea3MKC.png');}
 
 
-
-
 .skilltree{
   .skill{
     .killtext();
@@ -42,14 +40,14 @@ body{
     box-shadow:0 @p @p * 2 @p;
 
     span{
+      font:bold 8px Arial, Helvetica, sans-serif;
       display: block;
       position: absolute;
       color:#fff;
       bottom:@p;
       right: @p;
-      font-size:8px;
       background: rgba(0,0,0,0.5);
-      padding:2px 5px;
+      padding:@p / 4 @p / 2;
       border-radius:@p;
       z-index:2;
     }
@@ -72,7 +70,7 @@ body{
 
     &.available{
       &:after{
-        background:none;
+        //bbackground:none;
         border-color:#cc5;
         box-shadow:
 
