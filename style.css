@@ -10,30 +10,35 @@ body {
   background: #444;
 }
 .wrap {
-  width: 256px;
+  width: 320px;
   margin: auto;
 }
-.bear {
-  background: url('http://i.imgur.com/kOu1QNU.png');
+.skeleton {
+  background: url('sprite.jpg') -640px -160px;
+  background-size: 1000% auto;
 }
-.boots {
-  background: url('http://i.imgur.com/PvBWkUA.png');
+.path {
+  background: url('sprite.jpg') -640px -480px;
+  background-size: 1000% auto;
 }
 .net {
-  background: url('http://i.imgur.com/Hea3MKC.png');
+  background: url('sprite.jpg') 0px -560px;
+  background-size: 1000% auto;
+}
+.angel {
+  background: url('sprite.jpg') -160px -480px;
+  background-size: 1000% auto;
 }
 .skilltree .skill {
-  font-size: 0;
   position: relative;
   text-align: center;
   user-select: none;
   cursor: pointer;
   margin: 6px;
   display: inline-block;
-  background-size: 100% auto;
-  width: 64px;
-  height: 64px;
-  border-radius: 8px;
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
   box-shadow: 0 3px 6px 3px;
 }
 .skilltree .skill .status {
@@ -60,13 +65,13 @@ body {
   left: -3px;
   right: -3px;
   position: absolute;
-  border-radius: 8px;
+  border-radius: 5px;
   border: 3px solid #888888;
   box-shadow: inset 0 0 0 1px #ffffff, 0 0 0 1px #ffffff, inset 0 0 12px rgba(0, 0, 0, 0.5), inset 0 0 3px, 0 0 3px;
 }
 .skilltree .skill.available:after {
   border-color: #cc5;
-  box-shadow: inset 0 0 0 1px #ffff00, 0 0 0 1px #ffff00, inset 0 0 2px 2px #000000, 0 0 10px 1px #ffff55, inset 0 0 3px 1px #ffff55, inset 0 0 5px 2px rgba(255, 255, 255, 0.5), inset 0 0 12px rgba(0, 0, 0, 0.5), inset 0 0 3px, 0 0 3px;
+  box-shadow: inset 0 0 0 1px #ffffff, 0 0 0 1px #ffffff, inset 0 0 9px 0 #000000, 0 0 15px -3px #ffff55, inset 0 0 3px 1.5px rgba(255, 255, 255, 0.5), inset 0 0 12px rgba(0, 0, 0, 0.5), inset 0 0 3px, 0 0 3px;
 }
 .skilltree .skill.active:after {
   background: none;
@@ -86,7 +91,10 @@ body {
   text-shadow: 0 1px 1px #000;
   box-shadow: 0 0 0 1px #000000, 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
-.skilltree .skillHint h3 {
+.skilltree .skillHint h1,
+.skilltree .skillHint h3,
+.skilltree .skillHint h3,
+.skilltree .skillHint h4 {
   color: #ffcc00;
   margin-bottom: 3px;
 }

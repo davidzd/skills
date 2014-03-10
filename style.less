@@ -3,45 +3,32 @@ style.css file is generated from style.less file. Do not modify it directly - ra
 the LESS CSSS preprocessor.
 */
 
-@size : 64px;
-@br : @size / 8;
+@size : 80px;
+@br : @size / 16;
 @p : 3px;
-
+@sprite: url('sprite.jpg');
 @sans: Arial, Helvetica, sans-serif;
 
-*{
-  margin: 0;
-  padding: 0;
-}
+*{margin: 0;padding: 0;}
 
-body{
-  background: #444;
-}
+body{background: #444;}
+.wrap{width:@size * 4;margin: auto;}
 
-.killtext(){
-  font-size:0;
-}
+.skeleton{.bg(8,2)}
+.path{.bg(8,6)}
+.net{.bg(0,7);}
+.angel{.bg(2,6);}
 
-.wrap{
-  width:@size * 4;
-  margin: auto;
-}
-
-.bear {background:url('http://i.imgur.com/kOu1QNU.png');}
-.boots{background:url('http://i.imgur.com/PvBWkUA.png');}
-.net{background:url('http://i.imgur.com/Hea3MKC.png');}
-
+.bg(@x, @y){background:@sprite -@size*@x -@size*@y;background-size:1000% auto;}
 
 .skilltree{
   .skill{
-    .killtext();
     position: relative;
     text-align:center;
     user-select:none;
     cursor:pointer;
     margin:@p * 2;
     display : inline-block;
-    background-size: 100% auto;
     width: @size;
     height: @size;
     border-radius:@br;
@@ -87,14 +74,13 @@ body{
         box-shadow:
 
 
-          inset 0 0 0 1px #ff0,
-          0 0 0 1px #ff0,
+          inset 0 0 0 1px #fff,
+          0 0 0 1px #fff,
 
-          inset 0 0 2px 2px #000,
+          inset 0 0 @p*3 0 #000,
 
-          0 0 10px 1px #ff5,
-          inset 0 0 3px 1px #ff5,
-          inset 0 0 5px 2px rgba(255,255,255,0.5),
+          0 0 @p*5 -@p #ff5,
+          inset 0 0 @p @p/2 rgba(255,255,255,0.5),
 
           inset 0 0 @p * 4 rgba(0,0,0,0.5),
           inset 0 0 @p,
@@ -124,7 +110,7 @@ body{
     box-shadow:
       0 0 0 1px #000,
       0 0 0 2px rgba(255,255,255,0.2);
-    h3{
+    h1, h3, h3, h4{
       color:#ffcc00;
       margin-bottom: @p;
     }
