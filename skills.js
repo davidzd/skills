@@ -25,8 +25,8 @@ var skilltree = {
                         $('.skill[musthave='+id+']').each(function(){that.render($(this))});
                     }
 
-                    that.hint.find('p[showlevel]').hide();
-                    that.hint.find('p[showlevel='+current+']').show();
+                    that.hint.find('[showlevel]').hide();
+                    that.hint.find('[showlevel='+current+']').show();
                 }
 
             }
@@ -35,8 +35,8 @@ var skilltree = {
             function(){
                 that.hint.html($(this).find('div').html());
                 var current = $(this).attr('current');
-                that.hint.find('p[showlevel]').hide();
-                that.hint.find('p[showlevel='+current+']').show();
+                that.hint.find('[showlevel]').hide();
+                that.hint.find('[showlevel='+current+']').show();
 
                 that.hint.show();
             },
