@@ -33,12 +33,15 @@ var skilltree = {
         );
         this.buttons.hover(
             function(){
-                that.hint.html($(this).find('div').html());
-                var current = $(this).attr('current');
-                that.hint.find('[showlevel]').hide();
-                that.hint.find('[showlevel='+current+']').show();
+                var hintDiv = $(this).find('div');
+                if(typeof hintDiv[0]!='undefined'){
+                    that.hint.html(hintDiv.html());
+                    var current = $(this).attr('current');
+                    that.hint.find('[showlevel]').hide();
+                    that.hint.find('[showlevel='+current+']').show();
 
-                that.hint.show();
+                    that.hint.show();
+                }
             },
             function(){
                 that.hint.html('');
@@ -88,10 +91,7 @@ var skilltree = {
 
         // Getting IDs
 
-        var skillId = obj.attr('skillid');
         var mustHave = obj.attr('musthave');
-
-        // Rendering states
 
         if(current>0)obj.addClass('active');    // Always for all that are more than 0
 
@@ -99,7 +99,6 @@ var skilltree = {
             if(typeof mustHave=='undefined' || typeof $('[skillid='+mustHave+'].active')[0] !='undefined'){
                     obj.addClass('available');
             }
-            //obj.addClass('available');
         }
 
 
