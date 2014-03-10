@@ -52,7 +52,7 @@ var skilltree = {
                 top:   e.pageY
             });
         });
-
+        return this;
 
     },
     renderAll:function(){
@@ -62,6 +62,7 @@ var skilltree = {
                 that.render($(this));
             }
         );
+        return this;
     },
     render:function(obj){
         // Rendering numbers
@@ -104,14 +105,13 @@ var skilltree = {
 
         if(current==max)obj.removeClass('available');
 
+        return this;
+
     }
 };
 
 $(function(){
 
-    skilltree.init($('.skilltree'));
-    skilltree.renderAll();
-
-
+    skilltree.init($('.skilltree')).renderAll();
 
 });
