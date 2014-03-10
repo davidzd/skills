@@ -67,6 +67,21 @@ var skilltree = {
         );
         return this;
     },
+    getDependency:function(obj,level){
+
+        try{
+            eval('var evalResult = {'+obj.attr('dependency')+'}');
+        }
+        catch(e){
+            return false;
+        }
+
+        if(typeof level != 'undefined'){
+            if(typeof evalResult[level] != 'undefined')return evalResult[level];
+            else return false;
+        }
+        else return evalResult;
+    },
     render:function(obj){
         // Rendering numbers
 
