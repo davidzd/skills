@@ -2,6 +2,10 @@
 style.css file is generated from style.less file. Do not modify it directly - rarther install yourself
 the LESS CSSS preprocessor.
 */
+* {
+  margin: 0;
+  padding: 0;
+}
 body {
   background: #444;
 }
@@ -44,6 +48,9 @@ body {
   border-radius: 3px;
   z-index: 2;
 }
+.skilltree .skill div {
+  display: none;
+}
 .skilltree .skill:after {
   background: rgba(0, 0, 0, 0.6);
   display: block;
@@ -64,4 +71,28 @@ body {
 .skilltree .skill.active:after {
   background: none;
   border-color: #fc0;
+}
+.skilltree .skillHint {
+  font: normal 12px Arial, Helvetica, sans-serif;
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  z-index: 30;
+  border-radius: 3px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.5);
+  max-width: 150px;
+  color: #ccc;
+  text-shadow: 0 1px 1px #000;
+  box-shadow: 0 0 0 1px #000000, 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+.skilltree .skillHint h3 {
+  color: #ffcc00;
+  margin-bottom: 3px;
+}
+.skilltree .skillHint p {
+  margin-bottom: 3px;
+}
+.skilltree .skillHint i {
+  color: #0A0;
 }

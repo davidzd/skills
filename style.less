@@ -6,6 +6,14 @@ the LESS CSSS preprocessor.
 @size : 64px;
 @br : @size / 8;
 @p : 3px;
+
+@sans: Arial, Helvetica, sans-serif;
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
 body{
   background: #444;
 }
@@ -40,7 +48,7 @@ body{
     box-shadow:0 @p @p * 2 @p;
 
     span{
-      font:bold 8px Arial, Helvetica, sans-serif;
+      font:bold 8px @sans;
       display: block;
       position: absolute;
       color:#fff;
@@ -50,6 +58,10 @@ body{
       padding:@p / 4 @p / 2;
       border-radius:@p;
       z-index:2;
+    }
+
+    div{
+      display: none;
     }
 
     &:after{
@@ -94,6 +106,33 @@ body{
         background:none;
         border-color:#fc0;
       }
+    }
+  }
+  .skillHint{
+    font:normal 12px @sans;
+    display: none;
+    pointer-events:none;
+    position: absolute;
+    z-index:30;
+    border-radius:@p;
+    padding: @p * 2 @p * 4;
+    background: rgba(0, 0, 0, 0.5);
+    max-width:150px;
+    color:#ccc;
+    text-shadow: 0 1px 1px #000;
+
+    box-shadow:
+      0 0 0 1px #000,
+      0 0 0 2px rgba(255,255,255,0.2);
+    h3{
+      color:#ffcc00;
+      margin-bottom: @p;
+    }
+    p{
+      margin-bottom: @p;
+    }
+    i{
+      color:#0A0;
     }
   }
 }

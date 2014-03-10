@@ -1,9 +1,16 @@
 
 var skilltree = {
     buttons:'',
+    hint:'',
     init:function(obj){
         var that = this;
         this.buttons = obj.find('.skill');
+        this.hint = obj.find('.skillHint');
+        if(typeof this.hint[0]=='undefined'){
+            obj.append('<div class="skillHint"></div>');
+            this.hint=obj.find('.skillHint');
+        }
+
         this.buttons.click(function(){
 
                 if($(this).hasClass('available')){
@@ -21,6 +28,24 @@ var skilltree = {
 
             }
         );
+        this.buttons.hover(
+            function(){
+
+                if(typeof that.hint.html($(this).find('div').html()).html() !='undefined')
+                that.hint.show();
+            },
+            function(){
+                that.hint.html('');
+                that.hint.hide();
+
+            }
+        );
+        this.buttons.mousemove(function(e){
+            that.hint.css({
+                left:  e.pageX,
+                top:   e.pageY
+            });
+        });
 
 
     },
@@ -35,14 +60,14 @@ var skilltree = {
     render:function(obj){
         // Rendering numbers
 
-        var current =   obj.attr('current');
-        var max =       obj.attr('max');
+        var current =   parseInt(obj.attr('current'));
+        var max =       parseInt(obj.attr('max'));
 
-        if(typeof current=='undefined'){
+        if(isNaN(current) || current<0){
             current=0;
             obj.attr('current',0);
         }
-        if(typeof max=='undefined'){
+        if(isNaN(max) || current < 0){
             max=1;
             obj.attr('max',1);
         }
