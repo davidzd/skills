@@ -36,7 +36,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 3px 6px 3px;
 }
-.skilltree .skill span {
+.skilltree .skill .status {
   font: bold 8px Arial, Helvetica, sans-serif;
   display: block;
   position: absolute;

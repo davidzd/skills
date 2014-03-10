@@ -78,7 +78,12 @@ var skilltree = {
             obj.attr('max',1);
         }
 
-        obj.find('span').html(current+'/'+max);
+        var status = obj.find('.status');
+        if(typeof status[0]=='undefined'){
+            obj.append('<span class="status"></span>');
+            status = obj.find('.status');
+        }
+        status.html(current+'/'+max);
 
         // Getting IDs
 
