@@ -29,6 +29,19 @@ Also you can create skills that are depending on other ones. This can be done ea
 In this example there is a skill with id "foo" and the second one, which can be clicked only
 if "foo" was clicked
 
+## Advanced dependency
+
+It is possible to make skill level dependant from several other skills levels.
+
+    <div class="skill angel" skillid="quo" max="3" dependency="1:{foo:2,bar:3,baz:1}"></div>
+
+In this example the skill can be upgraded to level 1 only if there is a skill "foo" with at least level 2,
+"bar" with at least level 3 and "baz" with at least level 1.
+
+The value is eval-ed, so be careful. Just in case. Also if the syntax is wrong - the object will end up with
+no dependency (or with "musthave" one). Note that if there is an advanced dependency defined - the simple,
+"musthave" one is ignored.
+
 ## Skill Description
 
 To add a description - simply put another div inside skill item:

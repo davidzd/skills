@@ -1,3 +1,6 @@
+$.fn.hasAttr = function(name) {
+    return this.attr(name) !== undefined && this.attr(name) !== false;
+};
 
 var skilltree = {
     buttons:'',
@@ -21,8 +24,10 @@ var skilltree = {
                     if(current<max){
                         current=parseInt(current)+1;
                         $(this).attr('current',current);
-                        $(this).each(function(){that.render($(this))});
-                        $('.skill[musthave='+id+']').each(function(){that.render($(this))});
+                        //$(this).each(function(){that.render($(this))});
+                        //$('.skill[musthave='+id+']').each(function(){that.render($(this))});
+                        // TODO: Add dependency cache maybe?
+                        that.renderAll();
                     }
 
                     that.hint.find('[showlevel]').hide();
@@ -69,6 +74,7 @@ var skilltree = {
     },
     getDependency:function(obj,level){
 
+        if(!obj.hasAttr('dependency'))return false;
         try{
             eval('var evalResult = {'+obj.attr('dependency')+'}');
         }
@@ -83,7 +89,8 @@ var skilltree = {
         else return evalResult;
     },
     render:function(obj){
-        // Rendering numbers
+
+        // Getting current and max numbers
 
         var current =   parseInt(obj.attr('current'));
         var max =       parseInt(obj.attr('max'));
@@ -96,6 +103,8 @@ var skilltree = {
             max=1;
             obj.attr('max',1);
         }
+
+        // Adding status display div
 
         var status = obj.find('.status');
         if(typeof status[0]=='undefined'){
@@ -111,13 +120,22 @@ var skilltree = {
         if(current>0)obj.addClass('active');    // Always for all that are more than 0
 
         if(current<max){
-            if(typeof mustHave=='undefined' || typeof $('[skillid='+mustHave+'].active')[0] !='undefined'){
-                    obj.addClass('available');
+
+            var dep = this.getDependency(obj,current+1);
+            if(dep!=false){
+                var dependencymet=true;
+                for(var name in dep){
+                    var lvl = parseInt($('[classid='+name+']').attr('current'));
+                    if(isNaN(lvl) || lvl<0 || lvl<parseInt(dep[name]))dependencymet = false;
+                }
+                if(dependencymet)obj.addClass('available');
+                else obj.removeClass('available');
+            }
+            else if(typeof mustHave=='undefined' || typeof $('[skillid='+mustHave+'].active')[0] !='undefined'){
+                obj.addClass('available');
             }
         }
-
-
-        if(current==max)obj.removeClass('available');
+        if(current>=max)obj.removeClass('available');
 
         return this;
 
