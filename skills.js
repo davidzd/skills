@@ -19,19 +19,25 @@ var skilltree = {
 
                     var max = $(this).attr('max');
                     if(current<max){
-
-                        $(this).attr('current',parseInt(current)+1);
+                        current=parseInt(current)+1;
+                        $(this).attr('current',current);
                         $(this).each(function(){that.render($(this))});
                         $('.skill[musthave='+id+']').each(function(){that.render($(this))});
                     }
+
+                    that.hint.find('p[showlevel]').hide();
+                    that.hint.find('p[showlevel='+current+']').show();
                 }
 
             }
         );
         this.buttons.hover(
             function(){
+                that.hint.html($(this).find('div').html());
+                var current = $(this).attr('current');
+                that.hint.find('p[showlevel]').hide();
+                that.hint.find('p[showlevel='+current+']').show();
 
-                if(typeof that.hint.html($(this).find('div').html()).html() !='undefined')
                 that.hint.show();
             },
             function(){
@@ -89,6 +95,8 @@ var skilltree = {
             }
             //obj.addClass('available');
         }
+
+
         if(current==max)obj.removeClass('available');
 
     }
