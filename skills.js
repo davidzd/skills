@@ -88,6 +88,25 @@ var skilltree = {
         }
         else return evalResult;
     },
+    isDependencyMet:function(obj,forLevel){
+        var dep = this.getDependency(obj,forLevel);
+        var mustHave = obj.attr('musthave');
+
+        if(dep!=false){
+            var dependencymet=true;
+            for(var name in dep){
+                var lvl = parseInt($('[skillid='+name+']').attr('current'));
+                if(isNaN(lvl) || lvl<0 || lvl<parseInt(dep[name])){
+                    dependencymet = false;
+                }
+            }
+            return dependencymet;
+        }
+        else if(typeof mustHave=='undefined' || typeof $('[skillid='+mustHave+'].active')[0] !='undefined'){
+            return true;
+        }
+        else return false;
+    },
     render:function(obj){
 
         // Getting current and max numbers
@@ -115,30 +134,15 @@ var skilltree = {
 
         // Getting IDs
 
-        var mustHave = obj.attr('musthave');
+
 
         if(current>0)obj.addClass('active');    // Always for all that are more than 0
 
         if(current<max){
-
-            var dep = this.getDependency(obj,current+1);
-            if(dep!=false){
-                var dependencymet=true;
-                for(var name in dep){
-                    var lvl = parseInt($('[skillid='+name+']').attr('current'));
-                    if(isNaN(lvl) || lvl<0 || lvl<parseInt(dep[name])){
-                        //console.log('false for '+name+'. parseint - '+parseInt(dep[name])+', lvl = '+lvl);
-                        dependencymet = false;
-                    }
-                }
-                if(dependencymet)obj.addClass('available');
-                else obj.removeClass('available');
-            }
-            else if(typeof mustHave=='undefined' || typeof $('[skillid='+mustHave+'].active')[0] !='undefined'){
-                obj.addClass('available');
-            }
+            if(this.isDependencyMet(obj,current+1))obj.addClass('available');
+            else obj.removeClass('available');
         }
-        if(current>=max)obj.removeClass('available');
+        else if(current>=max)obj.removeClass('available');
 
         return this;
 
