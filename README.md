@@ -65,3 +65,22 @@ element will be shown only on certain level of skill
     </div>
 
 Of course, you can add "max" to the skill and create hints for, say, level 2 or 3 et cetera.
+
+Also note that if you are going to show multiple elements of text on certain level - it is recommended to wrap them
+with span. For example:
+
+    <div class="skill">
+        <div>
+            <h3>jQuery</h3>
+            <p>jQuery is a JS library</p>
+
+            <span showlevel=0">
+                <p><i>In order to advance with this you must:</i></p>
+                <p>Learn JavaScript</p>
+                <p>Get an IDE</p>
+                <p>Get jQuery</p>
+            </span>
+        </div>
+    </div>
+
+This way you can hint users which skills are required for advancement in something.

@@ -6,42 +6,53 @@ var skilltree = {
     buttons:'',
     hint:'',
     init:function(obj){
+
         var that = this;
+
         this.buttons = obj.find('.skill');
         this.hint = obj.find('.skillHint');
+
         if(typeof this.hint[0]=='undefined'){
             obj.append('<div class="skillHint"></div>');
             this.hint=obj.find('.skillHint');
         }
 
-        this.buttons.click(function(){
-
+        this.buttons.click(function(e){
+            if(e.button == 0){
                 if($(this).hasClass('available')){
-                    var current = $(this).attr('current');
-                    var id=$(this).attr('skillid');
 
-                    var max = $(this).attr('max');
+                    var current = parseInt($(this).attr('current'));
+                    var max = parseInt($(this).attr('max'));
+
                     if(current<max){
-                        current=parseInt(current)+1;
+                        current=current+1;
                         $(this).attr('current',current);
-                        //$(this).each(function(){that.render($(this))});
-                        //$('.skill[musthave='+id+']').each(function(){that.render($(this))});
-                        // TODO: Add dependency cache maybe?
                         that.renderAll();
                     }
 
                     that.hint.find('[showlevel]').hide();
                     that.hint.find('[showlevel='+current+']').show();
                 }
-
             }
-        );
+            return false;
+
+        });
+
+        this.buttons.bind('contextmenu', function(e){
+            //TODO: Add level decreasing
+            console.log('Stop rightclicking me!\nJoking. Feel free to rightclick me.\nThis is a stub.');
+            return false;
+        });
+
+        // Showing and hiding the tooltip
+
         this.buttons.hover(
             function(){
                 var hintDiv = $(this).find('div');
                 if(typeof hintDiv[0]!='undefined'){
                     that.hint.html(hintDiv.html());
                     var current = $(this).attr('current');
+
                     that.hint.find('[showlevel]').hide();
                     that.hint.find('[showlevel='+current+']').show();
 
@@ -54,6 +65,10 @@ var skilltree = {
 
             }
         );
+
+        // TODO: Check dimensions for tooltip
+        // Moving the tooltip
+
         this.buttons.mousemove(function(e){
             that.hint.css({
                 left:  e.pageX,
@@ -63,17 +78,10 @@ var skilltree = {
         return this;
 
     },
-    renderAll:function(){
-        var that = this;
-        this.buttons.each(
-            function(){
-                that.render($(this));
-            }
-        );
-        return this;
-    },
-    getDependency:function(obj,level){
 
+    // Getting and evauluating complex dependency for obj's level.
+
+    getDependency:function(obj,level){
         if(!obj.hasAttr('dependency'))return false;
         try{
             eval('var evalResult = {'+obj.attr('dependency')+'}');
@@ -88,6 +96,9 @@ var skilltree = {
         }
         else return evalResult;
     },
+
+    // Checking, if upgrade of obj to level forLevel is possible
+
     isDependencyMet:function(obj,forLevel){
         var dep = this.getDependency(obj,forLevel);
         var mustHave = obj.attr('musthave');
@@ -107,21 +118,17 @@ var skilltree = {
         }
         else return false;
     },
+
+    // Checking things and updating single skill (obj)
+
     render:function(obj){
 
         // Getting current and max numbers
 
         var current =   parseInt(obj.attr('current'));
-        var max =       parseInt(obj.attr('max'));
-
-        if(isNaN(current) || current<0){
-            current=0;
-            obj.attr('current',0);
-        }
-        if(isNaN(max) || current < 0){
-            max=1;
-            obj.attr('max',1);
-        }
+        if(isNaN(current) || current<0){current=0;obj.attr('current',0);}
+        var max = parseInt(obj.attr('max'));
+        if(isNaN(max) || current < 0){max=1;obj.attr('max',1);}
 
         // Adding status display div
 
@@ -132,11 +139,11 @@ var skilltree = {
         }
         status.html(current+'/'+max);
 
-        // Getting IDs
+        // Making already upgraded active
 
+        if(current>0)obj.addClass('active');
 
-
-        if(current>0)obj.addClass('active');    // Always for all that are more than 0
+        // Checking if upgrade to next level is possible
 
         if(current<max){
             if(this.isDependencyMet(obj,current+1))obj.addClass('available');
@@ -146,6 +153,18 @@ var skilltree = {
 
         return this;
 
+    },
+
+    // Checking stuff and rendering all elements
+
+    renderAll:function(){
+        var that = this;
+        this.buttons.each(
+            function(){
+                that.render($(this));
+            }
+        );
+        return this;
     }
 };
 
