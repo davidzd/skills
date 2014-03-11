@@ -125,8 +125,11 @@ var skilltree = {
             if(dep!=false){
                 var dependencymet=true;
                 for(var name in dep){
-                    var lvl = parseInt($('[classid='+name+']').attr('current'));
-                    if(isNaN(lvl) || lvl<0 || lvl<parseInt(dep[name]))dependencymet = false;
+                    var lvl = parseInt($('[skillid='+name+']').attr('current'));
+                    if(isNaN(lvl) || lvl<0 || lvl<parseInt(dep[name])){
+                        //console.log('false for '+name+'. parseint - '+parseInt(dep[name])+', lvl = '+lvl);
+                        dependencymet = false;
+                    }
                 }
                 if(dependencymet)obj.addClass('available');
                 else obj.removeClass('available');
