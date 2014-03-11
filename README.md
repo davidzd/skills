@@ -88,5 +88,13 @@ This way you can hint users which skills are required for advancement in somethi
 ## Hacking notes
 
  - The stylesheet is generated from LESS file. If you are going to modify the css - consider using [LESS preprocessor](http://lesscss.org)
-Otherwise it will be a mess. If you are unfamiliar with LESS - please, call the seniors.
- - To select sprite from sprite picture - set its coordinates in .bg mixin.
+Otherwise it will be a mess. If you are unfamiliar with LESS - please, call the seniors. To select sprite from sprite picture - set its
+coordinates in .bg mixin (see style.less for examples)
+
+## Plans for future
+
+ - Add decreasing levels
+ - Add avatars and primary skills
+ - Add saving and restoring data
+ - Add non-interactable objects : skill-depending objects like arrows and stuff (medals?)
+ - Add auto-updating, non-clickable skills
