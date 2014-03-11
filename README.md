@@ -84,3 +84,9 @@ with span. For example:
     </div>
 
 This way you can hint users which skills are required for advancement in something.
+
+## Hacking notes
+
+ - The stylesheet is generated from LESS file. If you are going to modify the css - consider using [LESS preprocessor](http://lesscss.org)
+Otherwise it will be a mess. If you are unfamiliar with LESS - please, call the seniors.
+ - To select sprite from sprite picture - set its coordinates in .bg mixin.
