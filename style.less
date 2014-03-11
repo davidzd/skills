@@ -52,7 +52,7 @@ body{background: #444;}
     }
 
     &:after{
-      background:rgba(0,0,0,0.6);
+      background:rgba(0,0,0,0.8);
       display: block;
       content:'';
       top: -@p;bottom: -@p;left: -@p;right: -@p;
@@ -90,7 +90,6 @@ body{background: #444;}
     &.active{
       &:after{
         background:none;
-        border-color:#fc0;
       }
     }
   }
@@ -116,6 +115,9 @@ body{background: #444;}
     }
     p{
       margin-bottom: @p;
+      &+h1, &+h2, &+h3, &+h4{
+        margin-top: @p * 3;
+      }
     }
     i{
       color:#0A0;
