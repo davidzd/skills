@@ -23,7 +23,7 @@ body{
 .net{.bg(0,7);}
 .angel{.bg(2,6);}
 
-.bg(@x, @y){background:@sprite -@size*@x -@size*@y;background-size:1000% auto;}
+.bg(@x, @y){background-position: -@size*@x -@size*@y;}
 
 
   .skill{
@@ -37,6 +37,8 @@ body{
     height: @size;
     border-radius:@br;
     box-shadow:0 @p @p * 2 @p;
+    background-image:@sprite;
+    background-size:1000% auto;
 
     .status{
       font:bold 8px @sans;

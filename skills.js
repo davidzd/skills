@@ -5,6 +5,7 @@ $.fn.hasAttr = function(name) {
 var skilltree = {
     buttons:'',
     hint:'',
+    size:80,
     init:function(obj){
 
         var that = this;
@@ -100,6 +101,26 @@ var skilltree = {
         else return evalResult;
     },
 
+
+    // Getting and evauluating complex dependency for obj's level.
+
+    getSprite:function(obj,level){
+        if(!obj.hasAttr('sprites'))return false;
+        try{
+            eval('var evalResult = {'+obj.attr('sprites')+'}');
+        }
+        catch(e){
+            return false;
+        }
+
+        if(typeof level != 'undefined'){
+            if(typeof evalResult[level] != 'undefined')return evalResult[level];
+            else return false;
+        }
+        else return false;
+    },
+
+
     // Checking, if upgrade of obj to level forLevel is possible
 
     isDependencyMet:function(obj,forLevel){
@@ -141,6 +162,12 @@ var skilltree = {
             status = obj.find('.status');
         }
         status.html(current+'/'+max);
+
+        // Modifying the sprite if any
+
+        var sprite = this.getSprite(obj,current);
+
+        if(sprite!=false)obj.css('background-position','-'+(parseInt(sprite[0])*this.size)+'px -'+(parseInt(sprite[1])*this.size)+'px');
 
         // Making already upgraded active
 

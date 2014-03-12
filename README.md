@@ -42,6 +42,12 @@ The value is eval-ed, so be careful. Just in case. Also if the syntax is wrong -
 no dependency (or with "musthave" one). Note that if there is an advanced dependency defined - the simple,
 "musthave" one is ignored.
 
+## Level-dependant sprites
+
+It is possible for each level to have specific sprite. For example:
+
+    <div class="skill" max="3" sprites="0:[2,1],1:[5,6],2:[9,2],3:[4,2]"></div>
+
 ## Skill Description
 
 To add a description - simply put another div inside skill item:
@@ -102,4 +108,4 @@ the seniors. To select sprite from sprite picture - set its coordinates in .bg m
  - Avatars and primary skills
  - Saving and restoring data
  - Non-interactable objects : skill-depending objects like arrows and stuff (medals?), auto-updating non-clickable skills
- - Different sprites for different levels.
+ - Requirement block

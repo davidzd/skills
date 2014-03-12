@@ -51,8 +51,13 @@ var skill = function(id){
     this.sprite = function(x,y){
         x*=80;
         y*=80;
-        this.styles['background'] = 'url(\'sprite.jpg\') -'+x+'px -'+y+'px';
-        this.styles['background-size'] = '1000% auto';
+        this.styles['background-position'] = '-'+x+'px -'+y+'px';
+        return this;
+    }
+
+    this.sprites = function(obj){
+        obj = JSON.stringify(obj).replace(/"/g, '\'');
+        this.params['sprites'] = obj.substr(1,obj.length - 2);
         return this;
     }
 

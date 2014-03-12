@@ -15,20 +15,16 @@ body {
   margin: auto;
 }
 .skeleton {
-  background: url('sprite.jpg') -640px -160px;
-  background-size: 1000% auto;
+  background-position: -640px -160px;
 }
 .path {
-  background: url('sprite.jpg') -640px -480px;
-  background-size: 1000% auto;
+  background-position: -640px -480px;
 }
 .net {
-  background: url('sprite.jpg') 0px -560px;
-  background-size: 1000% auto;
+  background-position: 0px -560px;
 }
 .angel {
-  background: url('sprite.jpg') -160px -480px;
-  background-size: 1000% auto;
+  background-position: -160px -480px;
 }
 .skill {
   position: relative;
@@ -41,6 +37,8 @@ body {
   height: 80px;
   border-radius: 5px;
   box-shadow: 0 3px 6px 3px;
+  background-image: url('sprite.jpg');
+  background-size: 1000% auto;
 }
 .skill .status {
   font: bold 8px Arial, Helvetica, sans-serif;
