@@ -74,7 +74,10 @@ var skilltree = {
                 left:  e.pageX,
                 top:   e.pageY
             });
-        });
+        })
+
+        this.renderAll();
+
         return this;
 
     },
