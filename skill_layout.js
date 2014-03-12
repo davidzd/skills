@@ -22,6 +22,7 @@ var skill = function(id){
 
     this.name = function(newName){
         this.theName=newName;
+        this.params['name'] = newName;
         return this;
     }
 
@@ -56,6 +57,7 @@ var skill = function(id){
     }
 
     this.id = function(id){
+        this.params['id'] = id;
         this.params['skillid'] = id;
         return this;
     }
@@ -66,7 +68,8 @@ var skill = function(id){
     }
 
     this.dependency = function(dep){
-        this.params['dependency'] = dep;
+        dep = JSON.stringify(dep).replace(/"/g, '\'');
+        this.params['dependency'] = dep.substr(1,dep.length - 2);
         return this;
     }
 
