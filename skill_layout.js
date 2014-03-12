@@ -1,9 +1,15 @@
 
-var skill = function(init){
+var skill = function(id){
 
-    if(typeof init == 'undefined')return new skill(1);
-    this.hintText = "";
     this.params={};
+
+    if(this instanceof skill) {
+        if(typeof id != 'undefined')this.params['skillid'] = id;
+    }
+    else return new skill(id);
+
+
+    this.hintText = "";
     this.styles={};
     this.classes="skill";
     this.theName="";
@@ -102,40 +108,3 @@ var skill = function(init){
 
     var that = this;
 }
-
-$(function(){
-
-    skill()
-        .id('html')
-        .max(3)
-        .pos(100,100)
-        .sprite(0,0)
-        .name('Html')
-        .hint('The art of the layout.')
-    .$();
-
-    skill()
-        .id('css')
-        .pos(200,100)
-        .sprite(2,6)
-        .max(4)
-        .name('CSS')
-        .mustHave('html')
-        .hint('The art of the markup')
-        .hint('Oh, come on. Everybody knows CSS.',0)
-    .$();
-
-    skill()
-        .id('preprocessors')
-        .pos(300,100)
-        .sprite(4,4)
-        .max(2)
-        .name('CSS Preprocessors')
-        .hint('LESS, SASS and others')
-        .hint('')
-    .$();
-
-
-
-    skilltree.init($('body'));
-});

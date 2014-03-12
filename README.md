@@ -88,7 +88,7 @@ This way you can hint users which skills are required for advancement in somethi
 ## Layout generator
 
 Layout generator is used to define trees with JS only. The description will be here later. Until then -
-see the bottom of skill_layout.js for example.
+see the bottom of layout.html for an example.
 
 ## Hacking notes
 
