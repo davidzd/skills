@@ -85,16 +85,21 @@ with span. For example:
 
 This way you can hint users which skills are required for advancement in something.
 
+## Layout generator
+
+Layout generator is used to define trees with JS only. The description will be here later. Until then -
+see the bottom of skill_layout.js for example.
+
 ## Hacking notes
 
- - The stylesheet is generated from LESS file. If you are going to modify the css - consider using [LESS preprocessor](http://lesscss.org)
-Otherwise it will be a mess. If you are unfamiliar with LESS - please, call the seniors. To select sprite from sprite picture - set its
-coordinates in .bg mixin (see style.less for examples)
+ - The stylesheet is generated from LESS file. If you are going to modify the css - consider using
+[LESS preprocessor](http://lesscss.org) Otherwise it will be a mess. If you are unfamiliar with LESS - please, call
+the seniors. To select sprite from sprite picture - set its coordinates in .bg mixin (see style.less for examples)
 
 ## Plans for future
 
- - Add decreasing levels
- - Add avatars and primary skills
- - Add saving and restoring data
- - Add non-interactable objects : skill-depending objects like arrows and stuff (medals?)
- - Add auto-updating, non-clickable skills
+ - Level decreasing
+ - Avatars and primary skills
+ - Saving and restoring data
+ - Non-interactable objects : skill-depending objects like arrows and stuff (medals?), auto-updating non-clickable skills
+ - Different sprites for different levels.
