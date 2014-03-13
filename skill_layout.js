@@ -98,6 +98,8 @@ var skill = function(id){
         return this;
     }
 
+    // Private
+
     function getParams(){
         var params="";
         for(var name in that.params){params+=(" "+name+'="'+that.params[name]+'"')}
