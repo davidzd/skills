@@ -4,7 +4,10 @@ var skill = function(id){
     this.params={};
 
     if(this instanceof skill) {
-        if(typeof id != 'undefined')this.params['skillid'] = id;
+        if(typeof id != 'undefined'){
+            this.params['skillid'] = id;
+            this.params['id'] = id;
+        }
     }
     else return new skill(id);
 
