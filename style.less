@@ -30,7 +30,7 @@ body{
   position: relative;
   text-align:center;
   user-select:none;
-  cursor:pointer;
+  cursor:default;
   margin:@p * 2;
   display : inline-block;
   width: @size;
@@ -74,6 +74,7 @@ body{
   }
 
   &.available{
+    cursor:pointer;
     &:after{
       //bbackground:none;
       border-color:#cc5;
