@@ -31,8 +31,16 @@ var skilltree = {
                         that.renderAll();
                     }
 
-                    that.hint.find('[showlevel]').hide();
-                    that.hint.find('[showlevel='+current+']').show();
+                    that.hint.find('[showlevel]').hide().filter(function(){
+                        var showlevel = $(this).attr('showlevel');
+                        if(showlevel.indexOf('-')!= -1){
+                            var levels = showlevel.split('-');
+                            if(current>=parseInt(levels[0]) && current<=parseInt(levels[1]))return true;
+                        }
+                        else if(showlevel==current)return true;
+                        return false;
+                    }).show();
+
                 }
             }
             return false;
@@ -52,10 +60,20 @@ var skilltree = {
                 var hintDiv = $(this).find('div');
                 if(typeof hintDiv[0]!='undefined'){
                     that.hint.html(hintDiv.html());
-                    var current = $(this).attr('current');
+                    var current = parseInt($(this).attr('current'));
 
-                    that.hint.find('[showlevel]').hide();
-                    that.hint.find('[showlevel='+current+']').show();
+                    //that.hint.find('[showlevel]').hide();
+                    //that.hint.find('[showlevel='+current+']').show();
+
+                    that.hint.find('[showlevel]').hide().filter(function(){
+                        var showlevel = $(this).attr('showlevel');
+                        if(showlevel.indexOf('-')!= -1){
+                            var levels = showlevel.split('-');
+                            if(current>=parseInt(levels[0]) && current<=parseInt(levels[1]))return true;
+                        }
+                        else if(showlevel==current)return true;
+                        return false;
+                    }).show();
 
                     that.hint.show();
                 }
