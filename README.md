@@ -5,6 +5,12 @@ This will be a clickable rpg-like skill/talent tree.
 
 Inspired by [dungeons and developers](http://www.dungeonsanddevelopers.com)
 
+## Requirements
+
+ - jQuery is required
+ - also, browsers that support CSS3
+ - also, straight hands and cold heart
+
 ## Basic Usage
 
 Pretty easy. See index.html for example.
@@ -91,10 +97,98 @@ with span. For example:
 
 This way you can hint users which skills are required for advancement in something.
 
-## Layout generator
+## JS Layout generator
 
-Layout generator is used to define trees with JS only. The description will be here later. Until then -
-see the bottom of layout.html for an example.
+Layout generator is used to define trees with JS only. Also, in future, it will be capable of exporting trees as json.
+The best way to get how it works is to see the bottom of layout.html file.
+
+To create a skill node - type:
+
+    skill();
+
+This will return an object containing skill node. Of course, you can assign this return to some variable, if you want.
+To do so - type one of following:
+
+    var node = skill();
+    var node = new skill();
+
+There are two methods to return the node content. First one, "_" , will return it as text:
+
+    var nodetext = skill()._();
+    $('body').append(nodetext);
+
+The second one, $, will append (using jQuery) it to element
+
+    skill().$();                // This will append to <body> element of a page
+    skill().$('#skilltree');    // This will append node to $('#skilltree');
+
+Next, there are various functions to customize and specify the node behavior. First of all, each node is recommended
+to have unique ID. There are two ways to specify an ID of a node:
+
+    skill('node');
+    skill().id('node');
+
+Max allows to set the maximum level available
+
+    skill.max(10);
+
+Hint method adds a paragraph of text to help div. The second, optional parameter is level or level rane on which the
+paragraph should be shown. For example:
+
+    skill().hint('This skill does something');
+
+    // This one will be shown only on level 0:
+    skill().hint('To proceed to level 1 you must first advance another skill',0);
+
+    // This one will be shown on levels 0-9
+    skill().max(20).hint('There is nothing to talk about until you are at least level 10','0-9');
+
+HintBody allows to directly add text to hint div.
+
+    skill()hint('<span showlevel="0">
+                    <h4>Skills required:</h4>
+                    <p>- skill1 - level 2</p>
+                    <p>- skill2- level 3</p>
+                </span>');
+
+Name will set the name of the node and also set the title of the hover hint:
+
+    skill().name('My Awesome Skill');
+
+Pos method will set the node absolute position:
+
+    skill().pos(25,25);
+
+Sprite method will set the sprite image coordinates. See the sprite.jpg. Coordinates are starting from 0.
+Sprites method allows to change sprites on specific level and requires object
+
+    skill().sprite(5,0);         // Select sixth sprite in first row
+    skill().sprites({3:[6,5]});  // Change sprite to seventh sprite in sixth row
+
+mustHave sets simple dependency and dependency method sets complex dependency. Note that it reieves an object.
+
+    skill.mustHave('otherNode');
+    skill.dependency({1:{'otherNode':2},2:{'otherNode':5});
+
+className adds a class to list of classes (.skill is already there)
+
+    skill.className('theclass');
+
+param sets the parameter for node's html elemenet. Note that "class" and "style" params will be overwritten.
+
+    skill.param('title','The title');
+
+Method calls to the node can be chained:
+
+    skill('spear')
+            .pos(200,150)
+            .sprite(6,1)
+            .max(20)
+            .mustHave('melee')
+            .name('Spear skill')
+            .hint('Spears are awesome')
+            .hint('Now you can also throw spear','10-20')
+    .$();
 
 ## Hacking notes
 
@@ -108,4 +202,4 @@ the seniors. To select sprite from sprite picture - set its coordinates in .bg m
  - Avatars and primary skills
  - Saving and restoring data
  - Non-interactable objects : skill-depending objects like arrows and stuff (medals?), auto-updating non-clickable skills
- - Requirement block
+ - Requirement block and hints for unmet requirements
