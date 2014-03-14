@@ -5,72 +5,61 @@
     <title>SkillTree</title>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="skills.js"></script>
+    <script type="text/javascript" src="skill_layout.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
 
-<div class="wrap">
-
-    <div id="tree" class="skilltree">
-        <div class="skill path" max="3" skillid="foo" id="foo">
-            <div>
-                <h3>Path finding</h3>
-                <p>Этот скилл за <b>что-то</b> отвечает. Я гарантирую это.</p>
-                <p showlevel="2"><i>Этот абзац будет видно только на 2 левеле.</i></p>
-                <p showlevel="0-2">Этот абзац видно на 0-2 левелах</p>
-            </div>
-        </div>
-
-        <div class="skill skeleton" max="3" skillid="bar" musthave="foo">
-            <div>
-                <div showlevel="0">
-                    <h3>Скелет</h3>
-                    <p>Кликни меня - и сможешь кликнуть следующий скилл. Для начала - не забудь кликнуть предыдущий, чтобы я стал доступен.</p>
-                </div>
-                <div showlevel="1">
-                    <h3>Прокачался.</h3>
-                    <p>Молодец! Теперь клацай следующий скилл.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="skill net" skillid="baz" id="baz" max="4" musthave="bar">
-            <div>
-                <h3 showlevel="0">Последний скилл</h3>
-                <p showlevel="0">Чтобы качнуть его - придётся хотя бы чуть-чуть качнуть остальные</p>
-                <h3 showlevel="1">Это всё.</h3>
-                <p showlevel="1">Вот. Ещё много чего осталось сделать, но уже работает.</p>
-                <p showlevel="1"><i>Надеюсь, тебе понравилось.</i></p>
-            </div>
-        </div>
-
-        <div class="skill angel" skillid="quo" max="3" dependency="1:{foo:2,bar:3,baz:1},2:{foo:3,baz:2}">
-            <div>
-                <h3>Сложный скилл</h3>
-                <p>Это составной скилл. Для его прокачки необходимо прокачать несколько других.</p>
-                <span showlevel="0">
-                <h4>Необходимо:</h4>
-                <p><b>Path Finding - 2,<br/> Скелет - 3,<br/>Последний Скилл - 1</b></p>
-                </span>
-                <span showlevel="1">
-                <h4>Необходимо:</h4>
-                <p><b>Path Finding - 3,<br/>Последний Скилл - 2</b></p>
-                </span>
-            </div>
-        </div>
-
-        <div class="skill" max="7" skillid="msprite" sprites="0:[0,2],2:[1,2],3:[2,2],4:[3,2],5:[4,2],6:[5,2],7:[6,2]">
-            <div>
-                <h3>Скилл с несколькими спрайтами</h3>
-                <p>У этого скилла картинка будет меняться в зависимости от уровня</p>
-            </div>
-        </div>
-
-
-    </div>
-
-</div>
-
+<div id="st"></div>
 
 </body>
+
+<script type="text/javascript">
+
+    $(function(){
+
+        skill('html')
+                .max(3)
+                .pos(400,100)
+                .sprite(0,0)
+                .sprites({2:[1,0],3:[2,0]})
+                .name('Html')
+                .hint('The art of the layout.')
+                .hint('You know how to HTML.',1)
+                .hint('You know how to HTML dynamically.',2)
+                .hint('You know how to HTML5.',3)
+        .$('#st');
+
+        skill('css')
+                .pos(500,100)
+                .sprite(6,0)
+                .sprites({2:[7,0],4:[8,0]})
+                .max(4)
+                .name('CSS')
+                .mustHave('html')
+                .hint('The art of the markup')
+                .hint('Oh, come on. Everybody knows CSS.',0)
+        .$('#st');
+
+        skill('preprocessors')
+                .pos(600,150)
+                .sprite(4,4)
+                .max(3)
+                .dependency({1:{'css':1},2:{'css':3}})
+                .sprites({2:[5,4],3:[6,4]})
+                .name('CSS Preprocessors')
+                .hint('LESS, SASS and others')
+                .hint('<i>First level of skill means that the hero knows how to set up the preprocessors and use some of their basics.</i>',0)
+                .hint('The hero knows how to set up the preprocessors and use some of their basics (variables, imports and simple mixins)',1)
+                .hint('<i>Next level means that the hero knows how to use parametric mixins and transformations</i>',1)
+                .hint('The hero knows how to set up the preprocessors and is aware of their advanced use (variables, mixins and functions)',2)
+                .hint('<i>Next level means that the hero utilizes various mixin libraries (LESSHat, Compass, etc)</i>',2)
+                .hint('The hero knows how to set up the preprocessors and is aware of their advanced use (variables, mixins and functions) as well as mixin libraries.',3)
+        .$('#st');
+
+        skilltree.init($('#st'));
+    });
+
+</script>
+
 </html>
