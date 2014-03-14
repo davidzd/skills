@@ -26,7 +26,7 @@ if (typeof skilltree.fromJSON != 'function') {
 
             node.$(parentElement);
         }
-        skilltree.init(parentElement);
+        return this;
     }
 }
 else console.error('skilltree.fromJSON already exists.')

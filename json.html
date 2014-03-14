@@ -20,7 +20,7 @@
     $(function(){
 
         $.getJSON('trees/php.json',function(obj){
-            skilltree.fromJSON(obj,$('#st'));
+            skilltree.fromJSON(obj,$('#st')).init($('#st'));
         });
 
     })
