@@ -190,6 +190,59 @@ Method calls to the node can be chained:
             .hint('Now you can also throw spear','10-20')
     .$();
 
+## JSON wrapper
+
+There is a way to build a tree automatically with data obtained from JSON:
+
+    $(function(){
+
+        $.getJSON('trees/php.json',function(obj){
+            skilltree.fromJSON(obj,$('#st')).init($('#st'));
+        });
+
+    })
+
+The JSON needs to be valid and to have following format:
+
+    {
+        "html":{
+            "name":"HTML",
+            "max":3,
+            "pos":[200,200],
+            "hint":[
+                {               "text":"All levels see this"},
+                {"level":1,     "text":"Only level 1 sees this"},
+                {"type":"raw",  "text":"<h4>I am the raw text. I am added without wrapping.</h4>"},
+                {               "text":"This is another paragraph"},
+                {"level":"1-2", "text":"This one is visible on levels 1-2"}
+            ],
+            "sprites":{
+                "2":[1,0],
+                "3":[2,0]
+            },
+            "className":["test","test2"],
+            "param":{"param1":"value"}
+        },
+        "css":{
+            "name":"CSS",
+            "max":3,
+            "pos":[300,200],
+            "sprite":[3,5],
+            "hint":[
+                {"text":"Cascade Styling Stuff"}
+            ],
+            "musthave":"html",
+            "dependency":{
+                "1":{
+                    "html":2
+                }
+            }
+        }
+    }
+
+
+
+
 ## Hacking notes
 
  - The stylesheet is generated from LESS file. If you are going to modify the css - consider using
