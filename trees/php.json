@@ -16,5 +16,19 @@
         },
         "className":["test","test2"],
         "param":{"param1":"value"}
+    },
+    "css":{
+        "name":"CSS",
+        "max":3,
+        "pos":[300,200],
+        "sprite":[3,5],
+        "hint":[
+            {"text":"Cascade Styling Stuff"}
+        ],
+        "dependency":{
+            "1":{
+                "html":2
+            }
+        }
     }
 }
