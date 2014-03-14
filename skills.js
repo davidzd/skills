@@ -8,6 +8,8 @@ var skilltree = {
     size: 80,
     init: function(obj) {
 
+        if(typeof obj == 'undefined')obj = $('body');
+
         var that = this;
 
         this.buttons = obj.find('.skill');

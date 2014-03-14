@@ -58,6 +58,11 @@ var skill = function(id){
         return this;
     }
 
+    this.current = function(level){
+        this.param('current',level);
+        return this;
+    }
+
     this.sprites = function(obj){
         obj = JSON.stringify(obj).replace(/"/g, '\'');
         this.params['sprites'] = obj.substr(1,obj.length - 2);
