@@ -18,7 +18,11 @@
 <script type="text/javascript">
 
     $(function(){
-        skilltree.fromJSON('trees/php.json',$('#st'));
+
+        $.getJSON('trees/php.json',function(obj){
+            skilltree.fromJSON(obj,$('#st'));
+        });
+
     })
 
 
