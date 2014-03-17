@@ -170,6 +170,12 @@ mustHave sets simple dependency and dependency method sets complex dependency. N
     skill.mustHave('otherNode');
     skill.dependency({1:{'otherNode':2},2:{'otherNode':5});
 
+
+There is a hint shown in the description for skills which dependency is not met. To disable the hint for the particular
+element - use "nohint" property
+
+    skill.nohint();
+
 className adds a class to list of classes (.skill is already there)
 
     skill.className('theclass');
@@ -248,6 +254,7 @@ Possible JSON values are:
  - param - an name:value object ("param":{"border":"none","title":"Hello"}
  - musthave - a string
  - dependency - an level:dependency object, where dependency is "skill id":level object.
+ - nohint - true if you dont want autohint to be shown
 
 ## Hacking notes
 
@@ -257,8 +264,6 @@ the seniors. To select sprite from sprite picture - set its coordinates in .bg m
 
 ## Plans for future
 
- - Level decreasing
  - Avatars and primary skills
  - Saving and restoring data
  - Non-interactable objects : skill-depending objects like arrows and stuff (medals?), auto-updating non-clickable skills
- - Requirement block and hints for unmet requirements
