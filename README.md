@@ -195,11 +195,7 @@ Method calls to the node can be chained:
 There is a way to build a tree automatically with data obtained from JSON:
 
     $(function(){
-
-        $.getJSON('trees/php.json',function(obj){
-            skilltree.fromJSON(obj,$('#st')).init($('#st'));
-        });
-
+        skilltree.buildFromJSON('trees/php.json');
     })
 
 The JSON needs to be valid and to have following format:
@@ -240,8 +236,18 @@ The JSON needs to be valid and to have following format:
         }
     }
 
+Possible JSON values are:
 
-
+ - name - string
+ - max - integer number
+ - pos - an [x, y] array
+ - hint - an array of objects. Each object have "text" parameter. Additionally it cah have string or integer level OR "type":"raw".
+ - sprite - an [x,y] array
+ - sprites - an object, each property of which is a number having an [x,y] array value.
+ - className - an array of strings
+ - param - an name:value object ("param":{"border":"none","title":"Hello"}
+ - musthave - a string
+ - dependency - an level:dependency object, where dependency is "skill id":level object.
 
 ## Hacking notes
 
