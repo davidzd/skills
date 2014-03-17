@@ -138,10 +138,27 @@ body{
   li{
     list-style-type: none;
   }
+  .commamenu li{
+    float: left;
+    list-style-type:none;
+    &:before{
+      content:'';
+    }
+    &+li{
+      &:before{
+        content:', ';
+      }
+    }
+  }
+  .commamenu:after{
+    clear: both;
+    display:block;
+    content : '';
+  }
   .reqs{
-    color:#f88;
+    color:#A00;
   }
   .met{
-    color:#484;
+    color:#0a0;
   }
 }

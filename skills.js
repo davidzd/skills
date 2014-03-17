@@ -24,8 +24,10 @@ var skilltree = {
     size: 80,
 
     language:{
-        reqs: "<h4>Requirements:</h4><ul>{0}</ul>",
-        levelreq : "<li{2}>{0} - Level {1}</li>"
+        reqTitle: 'Requirements for level {0}:',
+        req: '<h4>{1}</h4><ul class="reqs">{0}</ul>',
+        level : '<li class="{1}">{0}</li>',
+        levelTitle: '{0} - Level {1}'
     },
 
     init: function(obj) {
@@ -42,12 +44,10 @@ var skilltree = {
             this.hint = obj.find('.skillHint');
         }
 
-        // TODO: Replace these assignments with lambdas
 
         this.buttons.click(function(e) {
             if(e.button == 0) {
                 if($(this).hasClass('available')) {
-
                     var current = $(this).attrInt('current');
                     var max = $(this).attrInt('max');
 
@@ -57,16 +57,7 @@ var skilltree = {
                         that.renderAll();
                     }
 
-                    that.hint.find('[showlevel]').hide().filter(function() {
-                        var showlevel = $(this).attr('showlevel');
-                        if(showlevel.indexOf('-') != -1) {
-                            var levels = showlevel.split('-');
-                            if(current >= parseInt(levels[0]) && current <= parseInt(levels[1]))return true;
-                        }
-                        else if(showlevel == current)return true;
-                        return false;
-                    }).show();
-
+                    that.rebuildHint($(this),e);
                 }
             }
             return false;
@@ -85,28 +76,14 @@ var skilltree = {
             return false;
         });
 
+
+
+
         // Showing and hiding the tooltip
 
         this.buttons.hover(
             function(e) {
-                var hintDiv = $(this).find('div');
-                if(typeof hintDiv[0] != 'undefined') {
-                    that.hint.html(hintDiv.html());
-                    var current = $(this).attrInt('current');
-
-                    that.hint.find('[showlevel]').hide().filter(function() {
-                        var showlevel = $(this).attr('showlevel');
-                        if(showlevel.indexOf('-') != -1) {
-                            var levels = showlevel.split('-');
-                            if(current >= parseInt(levels[0]) && current <= parseInt(levels[1]))return true;
-                        }
-                        else if(showlevel == current)return true;
-                        return false;
-                    }).show();
-
-                    that.hint.css({left: e.pageX,top: e.pageY});
-                    that.hint.show();
-                }
+                that.rebuildHint($(this),e);
             },
             function() {
                 that.hint.html('');
@@ -114,7 +91,7 @@ var skilltree = {
             }
         );
 
-        // TODO: Check dimensions for tooltip
+        //TODO: Check dimensions for tooltip
         // Moving the tooltip
 
         this.buttons.mousemove(function(e) {
@@ -130,10 +107,66 @@ var skilltree = {
 
     },
 
-    // Getting the level of skill (by name)
+    rebuildHint: function(obj,e){
+        var hintDiv = obj.find('div');
+        var current = this.getSkillLevel(obj);
+
+        if(typeof hintDiv[0] != 'undefined') {
+            this.hint.html(hintDiv.html());
+
+            this.hint.find('[showlevel]').hide().filter(function() {
+                var showlevel = $(this).attr('showlevel');
+
+                if(showlevel.indexOf('-') != -1) {
+                    var levels = showlevel.split('-');
+                    if(current >= parseInt(levels[0]) && current <= parseInt(levels[1]))return true;
+                }
+                else if(showlevel == current)return true;
+                return false;
+            })
+            .show();
+        }
+
+        if(!obj.hasAttr('nohint') && obj.hasAttr('dependency') && !obj.hasClass('available') && current < obj.attrInt('max')){
+            this.hint.append(this.buildDependencyHint(obj));
+        }
+
+        this.hint.css({left: e.pageX,top: e.pageY});
+        this.hint.show();
+    },
+
+    buildDependencyHint: function(obj){
+        var nextLevel = this.getSkillLevel(obj)+1;
+        var deps = this.getDependency(obj,nextLevel);
+        var deptext = '';
+        for(name in deps){
+            level = deps[name];
+            var metclass = this.getSkillLevel(name)>=level;
+            deptext += this.language.level.format(this.language.levelTitle.format(this.getSkillName(name),level),metclass?'met':'unmet');
+        }
+        return this.language.req.format(deptext,this.language.reqTitle.format(nextLevel));
+
+    },
+
+    // Getting the level of skill
 
     getSkillLevel: function(skill){
+        if(typeof skill == "object")return skill.attrInt('current',0);
         return $('[skillid='+skill+']').attrInt('current',0);
+    },
+
+    getSkillName : function(skill){
+        var name;
+
+        if(typeof skill == "object"){
+            name = skill.attr('name');
+            if(name=='undefined')name = skill.attr('skillid');
+        }
+        else{
+            name = $('[skillid='+skill+']').attr('name');
+            if(name == 'undefined')name = skill;
+        }
+        return name;
     },
 
     // Getting and evauluating complex dependency for obj's level.

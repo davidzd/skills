@@ -124,9 +124,24 @@ body {
 .skillHint li {
   list-style-type: none;
 }
+.skillHint .commamenu li {
+  float: left;
+  list-style-type: none;
+}
+.skillHint .commamenu li:before {
+  content: '';
+}
+.skillHint .commamenu li + li:before {
+  content: ', ';
+}
+.skillHint .commamenu:after {
+  clear: both;
+  display: block;
+  content: '';
+}
 .skillHint .reqs {
-  color: #f88;
+  color: #A00;
 }
 .skillHint .met {
-  color: #484;
+  color: #0a0;
 }
