@@ -256,6 +256,18 @@ Possible JSON values are:
  - dependency - an level:dependency object, where dependency is "skill id":level object.
  - nohint - true if you dont want autohint to be shown
 
+## Importing and exporting data
+
+There is a way to export the results of "advancement" when you are happy with them:
+
+    skilltree.export();
+
+This will return the JSON string you can import back via
+
+    skilltree.import();
+
+Later. Note that only skills that have an id set will be saved. Everything else will be set to 0 on import.
+
 ## Hacking notes
 
  - The stylesheet is generated from LESS file. If you are going to modify the css - consider using
@@ -265,5 +277,4 @@ the seniors. To select sprite from sprite picture - set its coordinates in .bg m
 ## Plans for future
 
  - Avatars and primary skills
- - Saving and restoring data
  - Non-interactable objects : skill-depending objects like arrows and stuff (medals?), auto-updating non-clickable skills

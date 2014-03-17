@@ -321,12 +321,39 @@ var skilltree = {
                 that.render($(this));
             }
         );
-        return this;
+    },
+
+
+    // Export as JSON
+
+    export: function(){
+
+        var json='{';
+
+        var attrs=[];
+
+        this.buttons.filter('.active').each(function(){
+            attrs.push('"'+$(this).attr('skillid')+'":'+$(this).attrInt('current'))
+        });
+
+
+        json+=attrs.join(',');
+        json+='}';
+
+        return json;
+    },
+
+    import: function(json){
+        if(typeof json == 'string')json = JSON.parse(json);
+        this.buttons.each(function(){
+            var id = $(this).attr('skillid');
+            if(typeof json[id] != 'undefined')$(this).attr('current',json[id]);
+            else $(this).attr('current',0);
+        });
+        this.renderAll();
     }
 };
 
 $(function() {
-
     skilltree.init($('.skilltree')).renderAll();
-
 });
