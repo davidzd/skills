@@ -51,6 +51,7 @@ body {
   padding: 0.75px 1.5px;
   border-radius: 3px;
   z-index: 2;
+  user-select: none;
 }
 .skill div {
   display: none;
