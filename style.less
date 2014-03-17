@@ -109,9 +109,9 @@ body{
   position: absolute;
   z-index:30;
   border-radius:@p;
-  padding: @p * 2 @p * 4;
+  padding: @p * 2 @p * 4 @p * 8 @p * 4;
   background: rgba(0, 0, 0, 0.9);
-  max-width:150px;
+  max-width:200px;
   color:#ccc;
   text-shadow: 0 1px 1px #000;
 
@@ -122,8 +122,8 @@ body{
     color:#ffcc00;
     margin-bottom: @p;
   }
-  p{
-    margin-bottom: @p;
+  p, ul{
+    margin-bottom: @p * 3;
     &+h1, &+h2, &+h3, &+h4{
       margin-top: @p * 3;
     }
@@ -134,5 +134,14 @@ body{
   b{
     color:#88F;
     font-weight: normal;
+  }
+  li{
+    list-style-type: none;
+  }
+  .reqs{
+    color:#f88;
+  }
+  .met{
+    color:#484;
   }
 }

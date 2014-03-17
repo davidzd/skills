@@ -1,11 +1,33 @@
+if (!String.prototype.format) {
+    String.prototype.format = function() {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function(match, number) {
+            return typeof args[number] != 'undefined' ? args[number] : match;
+        });
+    };
+}
+
 $.fn.hasAttr = function(name) {
     return this.attr(name) !== undefined && this.attr(name) !== false;
+};
+
+$.fn.attrInt = function(name,dflt) {
+    var theAttr = parseInt(this.attr(name));
+    if(isNaN(theAttr) && typeof dflt != 'undefined')return dflt;
+    else return theAttr;
+
 };
 
 var skilltree = {
     buttons: '',
     hint: '',
     size: 80,
+
+    language:{
+        reqs: "<h4>Requirements:</h4><ul>{0}</ul>",
+        levelreq : "<li{2}>{0} - Level {1}</li>"
+    },
+
     init: function(obj) {
 
         if(typeof obj == 'undefined')obj = $('body');
@@ -20,12 +42,14 @@ var skilltree = {
             this.hint = obj.find('.skillHint');
         }
 
+        // TODO: Replace these assignments with lambdas
+
         this.buttons.click(function(e) {
             if(e.button == 0) {
                 if($(this).hasClass('available')) {
 
-                    var current = parseInt($(this).attr('current'));
-                    var max = parseInt($(this).attr('max'));
+                    var current = $(this).attrInt('current');
+                    var max = $(this).attrInt('max');
 
                     if(current < max) {
                         current = current + 1;
@@ -51,7 +75,7 @@ var skilltree = {
 
         this.buttons.bind('contextmenu', function(e) {
             if(that.isDowngradePossible($(this))){
-                var current = parseInt($(this).attr('current'));
+                var current = $(this).attrInt('current');
                 if(current > 0) {
                     current = current - 1;
                     $(this).attr('current', current);
@@ -64,14 +88,11 @@ var skilltree = {
         // Showing and hiding the tooltip
 
         this.buttons.hover(
-            function() {
+            function(e) {
                 var hintDiv = $(this).find('div');
                 if(typeof hintDiv[0] != 'undefined') {
                     that.hint.html(hintDiv.html());
-                    var current = parseInt($(this).attr('current'));
-
-                    //that.hint.find('[showlevel]').hide();
-                    //that.hint.find('[showlevel='+current+']').show();
+                    var current = $(this).attrInt('current');
 
                     that.hint.find('[showlevel]').hide().filter(function() {
                         var showlevel = $(this).attr('showlevel');
@@ -83,13 +104,13 @@ var skilltree = {
                         return false;
                     }).show();
 
+                    that.hint.css({left: e.pageX,top: e.pageY});
                     that.hint.show();
                 }
             },
             function() {
                 that.hint.html('');
                 that.hint.hide();
-
             }
         );
 
@@ -107,6 +128,12 @@ var skilltree = {
 
         return this;
 
+    },
+
+    // Getting the level of skill (by name)
+
+    getSkillLevel: function(skill){
+        return $('[skillid='+skill+']').attrInt('current',0);
     },
 
     // Getting and evauluating complex dependency for obj's level.
@@ -156,10 +183,11 @@ var skilltree = {
         if(dep != false) {
             var dependencymet = true;
             for(var name in dep) {
-                var lvl = parseInt($('[skillid=' + name + ']').attr('current'));
-                if(isNaN(lvl) || lvl < 0 || lvl < parseInt(dep[name])) {
+                var lvl = this.getSkillLevel(name);
+                if(lvl < parseInt(dep[name])) {
                     dependencymet = false;
                 }
+                if(!dependencymet)break;
             }
             return dependencymet;
         }
@@ -173,24 +201,21 @@ var skilltree = {
 
     isDowngradePossible: function(obj) {
 
-        // TODO: Rewrite this.. to make it work
-
-        var levelFrom = parseInt(obj.attr('current'));
-        if(isNaN(levelFrom) || levelFrom<=0)return false;
-
         var id =  obj.attr('skillid');
+        var levelFrom = obj.attrInt('current',0);
+        if(levelFrom<=0)return false;
 
         if(typeof id == 'undefined')return true;   // Always possible for skills with no id
 
-        if(levelFrom == 1 && typeof this.buttons.filter('.active[musthave="'+id+'"]')[0] == 'undefined'){
-            return true;
+        if(levelFrom == 1 && typeof this.buttons.filter('.active[musthave='+id+']')[0] != 'undefined'){
+            return false;
         }
 
         var isPossible = true;
         var that = this;
         this.buttons.filter('.active[dependency]').each(function(){
             var dep = that.getDependency($(this));
-            var current = parseInt($(this).attr('current'));
+            var current = $(this).attrInt('current');
             if(dep != false){
                 for(var lvl in dep){
                     if(parseInt(lvl)<=current){
@@ -211,7 +236,7 @@ var skilltree = {
 
         // Getting current and max numbers
 
-        var current = parseInt(obj.attr('current'));
+        var current = obj.attrInt('current');
         if(isNaN(current) || current < 0) {
             current = 0;
             obj.attr('current', 0);

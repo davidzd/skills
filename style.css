@@ -86,9 +86,9 @@ body {
   position: absolute;
   z-index: 30;
   border-radius: 3px;
-  padding: 6px 12px;
+  padding: 6px 12px 24px 12px;
   background: rgba(0, 0, 0, 0.9);
-  max-width: 150px;
+  max-width: 200px;
   color: #ccc;
   text-shadow: 0 1px 1px #000;
   box-shadow: 0 0 0 1px #000000, 0 0 0 2px rgba(255, 255, 255, 0.2);
@@ -100,13 +100,18 @@ body {
   color: #ffcc00;
   margin-bottom: 3px;
 }
-.skillHint p {
-  margin-bottom: 3px;
+.skillHint p,
+.skillHint ul {
+  margin-bottom: 9px;
 }
 .skillHint p + h1,
+.skillHint ul + h1,
 .skillHint p + h2,
+.skillHint ul + h2,
 .skillHint p + h3,
-.skillHint p + h4 {
+.skillHint ul + h3,
+.skillHint p + h4,
+.skillHint ul + h4 {
   margin-top: 9px;
 }
 .skillHint i {
@@ -115,4 +120,13 @@ body {
 .skillHint b {
   color: #88F;
   font-weight: normal;
+}
+.skillHint li {
+  list-style-type: none;
+}
+.skillHint .reqs {
+  color: #f88;
+}
+.skillHint .met {
+  color: #484;
 }
