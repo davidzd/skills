@@ -31,6 +31,9 @@ skilltree.fromJSON = function (jsonObject, parentElement) {
 
 skilltree.buildFromJSON = function(url,parentElement){
 
+    if(typeof url == "object")
+        skilltree.fromJSON(url, parentElement).init(parentElement);
+
     $.getJSON(url)
         .done(function( jsonObject ) {
             skilltree.fromJSON(jsonObject, parentElement).init(parentElement);
