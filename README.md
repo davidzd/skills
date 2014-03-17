@@ -145,7 +145,7 @@ paragraph should be shown. For example:
 
 HintBody allows to directly add text to hint div.
 
-    skill()hint('<span showlevel="0">
+    skill().hintBody('<span showlevel="0">
                     <h4>Skills required:</h4>
                     <p>- skill1 - level 2</p>
                     <p>- skill2- level 3</p>
