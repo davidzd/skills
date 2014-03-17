@@ -39,6 +39,12 @@ var skill = function(id){
         return this;
     }
 
+    this.nohint = function(value){
+        if(value!=false)this.params['nohint']='nohint';
+        else delete this.params['nohint'];
+        return this;
+    }
+
     this._ = function(){
         setHint();
         setStyles();
