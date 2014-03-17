@@ -14,6 +14,7 @@ skilltree.fromJSON = function (jsonObject, parentElement) {
 
         if (typeof elem.name != 'undefined')node.name(elem.name);
         if (typeof elem.max != 'undefined')node.max(elem.max);
+        if (typeof elem.nohint != 'undefined')node.nohint(elem.nohint);
         if (typeof elem.sprite != 'undefined')node.sprite(elem.sprite[0], elem.sprite[1]);
         if (typeof elem.sprites != 'undefined')node.sprites(elem.sprites);
         if (typeof elem.pos != 'undefined')node.pos(elem.pos[0], elem.pos[1]);

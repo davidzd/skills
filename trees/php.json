@@ -15,7 +15,12 @@
             "3":[2,0]
         },
         "className":["test","test2"],
-        "param":{"param1":"value"}
+        "param":{"param1":"value"},
+        "dependency":{
+            "3":{
+                "css":1
+            }
+        }
     },
     "css":{
         "name":"CSS",
