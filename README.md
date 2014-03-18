@@ -274,6 +274,10 @@ Later. Note that only skills that have an id set will be saved. Everything else 
 [LESS preprocessor](http://lesscss.org) Otherwise it will be a mess. If you are unfamiliar with LESS - please, call
 the seniors. To select sprite from sprite picture - set its coordinates in .bg mixin (see style.less for examples)
 
+## Caveats and recommendations
+
+ - Use letter-only ids if you want url module to work
+
 ## Plans for future
 
  - Avatars and primary skills

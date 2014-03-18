@@ -321,10 +321,11 @@ var skilltree = {
                 that.render($(this));
             }
         );
+        $(document).trigger('skillsAfterRender',this);
     },
 
 
-    // Export as JSON
+    // Export/import as JSON
 
     export: function(){
 
