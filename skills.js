@@ -32,6 +32,8 @@ var skilltree = {
 
     init: function(obj) {
 
+        $(document).trigger('skillsInit',this);
+
         if(typeof obj == 'undefined')obj = $('body');
 
         var that = this;
@@ -55,6 +57,7 @@ var skilltree = {
                         current = current + 1;
                         $(this).attr('current', current);
                         that.renderAll();
+                        $(document).trigger('skillsAfterChange',that);
                     }
 
                     that.rebuildHint($(this),e);
@@ -71,6 +74,8 @@ var skilltree = {
                     current = current - 1;
                     $(this).attr('current', current);
                     that.renderAll();
+
+                    $(document).trigger('skillsAfterChange',that);
                 }
             }
             return false;
@@ -102,6 +107,8 @@ var skilltree = {
         })
 
         this.renderAll();
+
+        $(document).trigger('skillsAfterInit',this);
 
         return this;
 
@@ -321,7 +328,7 @@ var skilltree = {
                 that.render($(this));
             }
         );
-        $(document).trigger('skillsAfterRender',this);
+        $(document).trigger('skillsAfterRender',that);
     },
 
 
