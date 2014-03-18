@@ -262,21 +262,22 @@ There is a way to export the results of "advancement" when you are happy with th
 
     skilltree.export();
 
-This will return the JSON string you can import back via
+This will return the JSON string you can import back via skilltree.import() later:
 
-    skilltree.import();
+    skilltree.import(jsonObjectSkilltreeExportResult);
 
-Later. Note that only skills that have an id set will be saved. Everything else will be set to 0 on import.
+Note that only skills that have an id set will be saved. Everything else will be set to 0 on import.
+
+## URL storing
+
+The URL module. When active it allows you to save progress as hash part of the URL.  Use letter-only ids if you want URL
+module to work.
 
 ## Hacking notes
 
  - The stylesheet is generated from LESS file. If you are going to modify the css - consider using
 [LESS preprocessor](http://lesscss.org) Otherwise it will be a mess. If you are unfamiliar with LESS - please, call
 the seniors. To select sprite from sprite picture - set its coordinates in .bg mixin (see style.less for examples)
-
-## Caveats and recommendations
-
- - Use letter-only ids if you want url module to work
 
 ## Plans for future
 
