@@ -361,7 +361,3 @@ var skilltree = {
         this.renderAll();
     }
 };
-
-$(function() {
-    skilltree.init($('.skilltree')).renderAll();
-});
