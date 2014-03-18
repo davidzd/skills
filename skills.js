@@ -32,6 +32,8 @@ var skilltree = {
 
     init: function(obj) {
 
+        $(document).trigger('skillsInit',this);
+
         if(typeof obj == 'undefined')obj = $('body');
 
         var that = this;
@@ -55,6 +57,7 @@ var skilltree = {
                         current = current + 1;
                         $(this).attr('current', current);
                         that.renderAll();
+                        $(document).trigger('skillsAfterChange',that);
                     }
 
                     that.rebuildHint($(this),e);
@@ -71,6 +74,8 @@ var skilltree = {
                     current = current - 1;
                     $(this).attr('current', current);
                     that.renderAll();
+
+                    $(document).trigger('skillsAfterChange',that);
                 }
             }
             return false;
@@ -102,6 +107,8 @@ var skilltree = {
         })
 
         this.renderAll();
+
+        $(document).trigger('skillsAfterInit',this);
 
         return this;
 
@@ -321,12 +328,36 @@ var skilltree = {
                 that.render($(this));
             }
         );
-        return this;
+        $(document).trigger('skillsAfterRender',that);
+    },
+
+
+    // Export/import as JSON
+
+    export: function(){
+
+        var json='{';
+
+        var attrs=[];
+
+        this.buttons.filter('.active').each(function(){
+            attrs.push('"'+$(this).attr('skillid')+'":'+$(this).attrInt('current'))
+        });
+
+
+        json+=attrs.join(',');
+        json+='}';
+
+        return json;
+    },
+
+    import: function(json){
+        if(typeof json == 'string')json = JSON.parse(json);
+        this.buttons.each(function(){
+            var id = $(this).attr('skillid');
+            if(typeof json[id] != 'undefined')$(this).attr('current',json[id]);
+            else $(this).attr('current',0);
+        });
+        this.renderAll();
     }
 };
-
-$(function() {
-
-    skilltree.init($('.skilltree')).renderAll();
-
-});
