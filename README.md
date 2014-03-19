@@ -1,3 +1,5 @@
+![Funny picture](http://imgs.xkcd.com/comics/manuals.png)
+
 Skills
 ======
 
@@ -10,9 +12,6 @@ Inspired by [dungeons and developers](http://www.dungeonsanddevelopers.com)
  - jQuery is required
  - also, browsers that support CSS3
  - also, straight hands and cold heart
-
-
-![Funny picture](http://imgs.xkcd.com/comics/manuals.png)
 
 ## Basic Usage
 
