@@ -11,6 +11,9 @@ Inspired by [dungeons and developers](http://www.dungeonsanddevelopers.com)
  - also, browsers that support CSS3
  - also, straight hands and cold heart
 
+
+![Funny picture](http://imgs.xkcd.com/comics/manuals.png)
+
 ## Basic Usage
 
 Pretty easy. See index.html for example.
