@@ -14,18 +14,6 @@ body {
   width: 320px;
   margin: auto;
 }
-.skeleton {
-  background-position: -640px -160px;
-}
-.path {
-  background-position: -640px -480px;
-}
-.net {
-  background-position: 0px -560px;
-}
-.angel {
-  background-position: -160px -480px;
-}
 .skill {
   position: relative;
   text-align: center;
@@ -39,6 +27,21 @@ body {
   box-shadow: 0 3px 6px 3px;
   background-image: url('sprite.jpg');
   background-size: 1000% auto;
+}
+.skill.sm .abbr {
+  font-size: 28px;
+}
+.skill .abbr {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.8), 0 -1px #000000;
+  overflow: hidden;
+  font: bold 48px Arial, Helvetica, sans-serif;
+  text-align: center;
+  line-height: 80px;
+  background: #888;
+  color: #444;
 }
 .skill .status {
   font: bold 8px Arial, Helvetica, sans-serif;
@@ -92,6 +95,9 @@ body {
   color: #ccc;
   text-shadow: 0 1px 1px #000;
   box-shadow: 0 0 0 1px #000000, 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+.skillHint .alias {
+  display: none;
 }
 .skillHint h1,
 .skillHint h3,

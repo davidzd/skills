@@ -12,60 +12,10 @@
 <div class="wrap">
 
     <div id="tree" class="skilltree">
-        <div class="skill path" max="3" skillid="foo" id="foo">
-            <div>
-                <h3>Path finding</h3>
-                <p>Этот скилл за <b>что-то</b> отвечает. Я гарантирую это.</p>
-                <p showlevel="2"><i>Этот абзац будет видно только на 2 левеле.</i></p>
-                <p showlevel="0-2">Этот абзац видно на 0-2 левелах</p>
-            </div>
-        </div>
 
-        <div class="skill skeleton" max="3" skillid="bar" musthave="foo">
-            <div>
-                <div showlevel="0">
-                    <h3>Скелет</h3>
-                    <p>Кликни меня - и сможешь кликнуть следующий скилл. Для начала - не забудь кликнуть предыдущий, чтобы я стал доступен.</p>
-                </div>
-                <div showlevel="1">
-                    <h3>Прокачался.</h3>
-                    <p>Молодец! Теперь клацай следующий скилл.</p>
-                </div>
-            </div>
+        <div class="skill" current="1" max="3" skillid="foo" id="foo">
+            <div>The skill :3</div>
         </div>
-
-        <div class="skill net" skillid="baz" id="baz" max="4" musthave="bar">
-            <div>
-                <h3 showlevel="0">Последний скилл</h3>
-                <p showlevel="0">Чтобы качнуть его - придётся хотя бы чуть-чуть качнуть остальные</p>
-                <h3 showlevel="1">Это всё.</h3>
-                <p showlevel="1">Вот. Ещё много чего осталось сделать, но уже работает.</p>
-                <p showlevel="1"><i>Надеюсь, тебе понравилось.</i></p>
-            </div>
-        </div>
-
-        <div class="skill angel" skillid="quo" max="3" dependency="1:{foo:2,bar:3,baz:1},2:{foo:3,baz:2}">
-            <div>
-                <h3>Сложный скилл</h3>
-                <p>Это составной скилл. Для его прокачки необходимо прокачать несколько других.</p>
-                <span showlevel="0">
-                <h4>Необходимо:</h4>
-                <p><b>Path Finding - 2,<br/> Скелет - 3,<br/>Последний Скилл - 1</b></p>
-                </span>
-                <span showlevel="1">
-                <h4>Необходимо:</h4>
-                <p><b>Path Finding - 3,<br/>Последний Скилл - 2</b></p>
-                </span>
-            </div>
-        </div>
-
-        <div class="skill" max="7" skillid="msprite" sprites="0:[0,2],2:[1,2],3:[2,2],4:[3,2],5:[4,2],6:[5,2],7:[6,2]">
-            <div>
-                <h3>Скилл с несколькими спрайтами</h3>
-                <p>У этого скилла картинка будет меняться в зависимости от уровня</p>
-            </div>
-        </div>
-
 
     </div>
 

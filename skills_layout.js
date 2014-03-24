@@ -29,6 +29,16 @@ var skill = function(id){
         return this;
     }
 
+    this.abbr = function(abbr){
+        this.params['abbr']=abbr;
+        return this;
+    }
+
+    this.abbr_color = function(clr){
+        this.params['abbr_color']=clr;
+        return this;
+    }
+
     this.hintBody = function(text){
         this.hintText +=text;
         return this;
@@ -74,6 +84,8 @@ var skill = function(id){
         this.params['sprites'] = obj.substr(1,obj.length - 2);
         return this;
     }
+
+
 
     this.id = function(id){
         this.params['id'] = id;

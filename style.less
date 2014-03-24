@@ -18,11 +18,6 @@ body{
 }
 .wrap{width:@size * 4;margin: auto;}
 
-.skeleton{.bg(8,2)}
-.path{.bg(8,6)}
-.net{.bg(0,7);}
-.angel{.bg(2,6);}
-
 .bg(@x, @y){background-position: -@size*@x -@size*@y;}
 
 
@@ -39,6 +34,29 @@ body{
   box-shadow:0 @p @p * 2 @p;
   background-image:@sprite;
   background-size:1000% auto;
+
+  &.sm .abbr{
+      font-size: 28px;
+  }
+  .abbr{
+    display: block;
+    width: 100%;
+    height: 100%;
+
+
+    text-shadow:
+      0 1px rgba(255,255,255,0.8),
+      0 -1px #000;
+
+    overflow: hidden;
+
+    font:bold 48px @sans;
+
+    text-align: center;
+    line-height: @size;
+    background: #888;
+    color:#444;
+  }
 
   .status{
     font:bold 8px @sans;
@@ -118,6 +136,11 @@ body{
   box-shadow:
     0 0 0 1px #000,
     0 0 0 2px rgba(255,255,255,0.2);
+
+  .alias{
+    display: none;
+  }
+
   h1, h3, h3, h4{
     color:#ffcc00;
     margin-bottom: @p;

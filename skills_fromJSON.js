@@ -23,12 +23,15 @@ skilltree.fromJSON = function (jsonObject, parentElement) {
         if (typeof elem.dependency != 'undefined')node.dependency(elem.dependency);
         if (typeof elem.className != 'undefined')for (var idx in elem.className)node.className(elem.className[idx]);
         if (typeof elem.param != 'undefined')for (var idx in elem.param)node.param(idx, elem.param[idx]);
+        if (typeof elem.abbr != 'undefined')node.abbr(elem.abbr);
+        if (typeof elem.abbr_color != 'undefined')node.abbr_color(elem.abbr_color);
 
         node.$(parentElement);
     }
     return this;
 }
 
+//TODO: Add abbr
 
 skilltree.buildFromJSON = function(url,parentElement){
 
