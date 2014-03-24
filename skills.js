@@ -18,6 +18,18 @@ $.fn.attrInt = function(name,dflt) {
 
 };
 
+String.prototype.randomColor = function() {
+
+    var hash;
+    var colour;
+    for (var i = 0, hash = 0; i < this.length; hash = this.charCodeAt(i++) + ((hash << 5) - hash));
+    for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+
+    return colour;
+}
+
+hexColorToGrayscale = function(str){str = str.substr(1,6);return (parseInt(str.substr(0,2),16) + parseInt(str.substr(2,2),16) + parseInt(str.substr(4,2),16)) / 3;}
+
 var skilltree = {
     buttons: '',
     hint: '',
@@ -106,6 +118,7 @@ var skilltree = {
             });
         })
 
+        this.generateAbbrs();
         this.renderAll();
 
         $(document).trigger('skillsAfterInit',this);
@@ -140,6 +153,38 @@ var skilltree = {
 
         this.hint.css({left: e.pageX,top: e.pageY});
         this.hint.show();
+    },
+
+    generateAbbrs : function(){
+        this.buttons.each(function(){
+
+            if(!($(this).hasAttr('sprite')) && !($(this).hasAttr('sprites'))) {
+
+                var abbr = '';
+                if($(this).hasAttr('abbr'))abbr = $(this).attr('abbr');
+                else {
+                    if($(this).hasAttr('name'))abbr=$(this).attr('name').substr(0,2);
+                    else if($(this).hasAttr('skillid'))abbr=$(this).attr('skillid').substr(0,2);
+                    if(abbr!='')abbr = abbr.substr(0,1).toUpperCase() + abbr.substr(1,1).toLowerCase();
+                }
+
+                if(abbr!=''){
+
+                    if(abbr.length>2)$(this).addClass('sm');
+
+                    var color = '';
+                    if($(this).hasAttr('abbr_color'))color = $(this).attr('abbr_color');else color = abbr.randomColor();
+
+                    var textColor = hexColorToGrayscale(color)<128 ? 'color: #FFF;' : 'color: #444;';
+
+                    if(color!='')color = ' style="background:'+color+';'+textColor+'"';
+
+                    $(this).append('<span class="abbr"'+color+'>'+abbr+'</span>');
+                }
+                $(this).addClass('nosprite');
+            }
+
+        });
     },
 
     buildDependencyHint: function(obj){
@@ -277,6 +322,7 @@ var skilltree = {
         // Getting current and max numbers
 
         var current = obj.attrInt('current');
+
         if(isNaN(current) || current < 0) {
             current = 0;
             obj.attr('current', 0);
@@ -299,7 +345,6 @@ var skilltree = {
         // Modifying the sprite if any
 
         var sprite = this.getSprite(obj, current);
-
         if(sprite != false)obj.css('background-position', '-' + (parseInt(sprite[0]) * this.size) + 'px -' + (parseInt(sprite[1]) * this.size) + 'px');
 
         // Making already upgraded active
