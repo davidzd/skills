@@ -301,6 +301,7 @@ var skilltree = {
         var sprite = this.getSprite(obj, current);
 
         if(sprite != false)obj.css('background-position', '-' + (parseInt(sprite[0]) * this.size) + 'px -' + (parseInt(sprite[1]) * this.size) + 'px');
+        else obj.addClass('nosprite');
 
         // Making already upgraded active
 
