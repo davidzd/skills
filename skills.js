@@ -35,6 +35,8 @@ var skilltree = {
     hint: '',
     size: 80,
 
+    editorMode:false,
+
     language:{
         reqTitle: 'Requirements for level {0}:',
         req: '<h4>{1}</h4><ul class="reqs">{0}</ul>',
@@ -58,65 +60,72 @@ var skilltree = {
             this.hint = obj.find('.skillHint');
         }
 
+        if(!this.editorMode) {
+            this.buttons.click(function (e) {
+                if (e.button == 0) {
+                    if ($(this).hasClass('available')) {
+                        var current = $(this).attrInt('current');
+                        var max = $(this).attrInt('max');
 
-        this.buttons.click(function(e) {
-            if(e.button == 0) {
-                if($(this).hasClass('available')) {
+                        if (current < max) {
+                            current = current + 1;
+                            $(this).attr('current', current);
+                            that.renderAll();
+                            $(document).trigger('skillsAfterChange', that);
+                        }
+
+                        that.rebuildHint($(this), e);
+                    }
+                }
+                return false;
+
+            });
+
+            this.buttons.bind('contextmenu', function (e) {
+                if (that.isDowngradePossible($(this))) {
                     var current = $(this).attrInt('current');
-                    var max = $(this).attrInt('max');
-
-                    if(current < max) {
-                        current = current + 1;
+                    if (current > 0) {
+                        current = current - 1;
                         $(this).attr('current', current);
                         that.renderAll();
-                        $(document).trigger('skillsAfterChange',that);
+
+                        $(document).trigger('skillsAfterChange', that);
                     }
-
-                    that.rebuildHint($(this),e);
                 }
-            }
-            return false;
-
-        });
-
-        this.buttons.bind('contextmenu', function(e) {
-            if(that.isDowngradePossible($(this))){
-                var current = $(this).attrInt('current');
-                if(current > 0) {
-                    current = current - 1;
-                    $(this).attr('current', current);
-                    that.renderAll();
-
-                    $(document).trigger('skillsAfterChange',that);
-                }
-            }
-            return false;
-        });
-
-
-
-
-        // Showing and hiding the tooltip
-
-        this.buttons.hover(
-            function(e) {
-                that.rebuildHint($(this),e);
-            },
-            function() {
-                that.hint.html('');
-                that.hint.hide();
-            }
-        );
-
-        //TODO: Check dimensions for tooltip
-        // Moving the tooltip
-
-        this.buttons.mousemove(function(e) {
-            that.hint.css({
-                left: e.pageX,
-                top: e.pageY
+                return false;
             });
-        })
+
+
+            // Showing and hiding the tooltip
+
+            this.buttons.hover(
+                function(e) {
+                    that.rebuildHint($(this),e);
+                },
+                function() {
+                    that.hint.html('');
+                    that.hint.hide();
+                }
+            );
+
+            //TODO: Check dimensions for tooltip
+            // Moving the tooltip
+
+            this.buttons.mousemove(function(e) {
+                that.hint.css({
+                    left: e.pageX,
+                    top: e.pageY
+                });
+            })
+
+        }
+
+
+
+
+
+
+
 
         this.generateAbbrs();
         this.renderAll();

@@ -18,7 +18,12 @@ var dragMe={
 
 
         dragMe.panel = $('#propanel');
+
         dragMe.panel.e_title = $('#title');
+        dragMe.panel.e_id = $('#elid');
+        dragMe.panel.e_useabbr = $('#useabbr');
+        dragMe.panel.e_abbr = $('#abbr');
+
         dragMe.panel.on('mousedown',function(event){
             event.stopPropagation();
         });
@@ -51,7 +56,9 @@ var dragMe={
         dragMe.selectedElement.addClass('selected');
 
         dragMe.panel.show();
-        dragMe.panel.e_title.val(element.html());
+        dragMe.panel.e_title.val(element.attr('name'));
+        dragMe.panel.e_id.val(element.attr('id'));
+        dragMe.panel.e_abbr.val(element.attr('abbr'));
     },
     unselect:function(event){
         if(dragMe.selectedElement) {
@@ -76,9 +83,3 @@ var dragMe={
         dragMe.currentDrag=null;
     }
 };
-
-
-
-$(function(){
-    dragMe.init();
-});

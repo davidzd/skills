@@ -22,9 +22,19 @@
     <div id="propanel">
         <div class="interface">
             <div class="panel">
-                <div class="title">Hey</div>
-                <label for="title">Title</label>
+                <div class="title">Name and description</div>
+                <label for="elid">Element ID</label>
+                <input type="text" id="elid">
+                <label for="title">Name</label>
                 <input type="text" id="title">
+                <input type="submit">
+            </div>
+            <div class="panel">
+                <div class="title">Sprite</div>
+                <label for="useabbr">Use abbreviation instead of sprite</label>
+                <input type="checkbox" id="useabbr">
+                <label for="abbr">Abbreviation</label>
+                <input type="text" id="abbr">
                 <input type="submit">
             </div>
         </div>
@@ -37,10 +47,24 @@
         <a href="#">Export</a>
     </div>
 
-    <div class="draggable" draggable>Hello</div>
-    <div class="draggable" draggable>Hello 2</div>
-    <div class="draggable" draggable>Hello 3</div>
-
 </body>
 </html>
 
+
+<script type="text/javascript">
+
+    skilltree.editorMode = true;
+
+    $(document).on('skillsAfterInit',function() {
+        skilltree.buttons.each(function () {
+            $(this).attr('draggable', 'draggable')
+        });
+        console.log('Hey');
+        dragMe.init();
+    });
+
+    $(function(){
+        skilltree.buildFromJSON('../trees/php.json');
+    });
+
+</script>
