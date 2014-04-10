@@ -48,3 +48,42 @@ skilltree.buildFromJSON = function(url,parentElement){
     );
 
 }
+
+skilltree.buildJSONOfElement = function(element){
+    var json = {};
+    if(element.attr('name'))json.name=element.attr('name');
+    if(element.attr('max'))json.max=element.attr('max');
+    if(element.attr('sprite'))json.sprite=element.attr('sprite');
+    if(element.attr('sprites'))json.sprites=element.attr('sprites');
+    if(element.attr('current'))json.current=element.attr('current');
+    if(element.attr('mustHave'))json.mustHave=element.attr('mustHave');
+    if(skilltree.buildObjFromString(element.attr('dependency')))json.dependency=skilltree.buildObjFromString(element.attr('dependency'));
+    if(element.attr('abbr'))json.dependency=element.attr('dependency');
+    if(element.attr('abbr_color'))json.dependency=element.attr('dependency');
+    json.pos=[element.offset().left - parseInt(element.css('margin-left')),element.offset().top - parseInt(element.css('margin-top'))];
+
+    return json;
+}
+
+// Add hint parsing
+
+skilltree.buildObjFromString = function(str){
+    if(typeof str == 'undefined')return false;
+    try {
+        console.log(str+' parsed succesfully.');
+        eval('var evalResult = {' + str + '}');
+    }
+    catch(e){
+        console.log(str+' parsing error.');
+        return false;
+    }
+    return evalResult;
+}
+
+skilltree.buildJSON = function(element){
+    var json = {};
+    element.find('.skill').each(function(el){
+        json[$(this).attr('id')] = skilltree.buildJSONOfElement($(this));
+    });
+    return json;
+}
