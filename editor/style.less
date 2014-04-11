@@ -5,7 +5,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1000000;
+  z-index: -1;
   pointer-events: none;
   background-image:
   linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
@@ -14,7 +14,7 @@
 }
 
 #propanel{
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   top: 0;
@@ -25,6 +25,76 @@
   z-index:10000000;
 }
 
+@selsize:600px;
+
+#sprite_selector{
+  position: fixed;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: @selsize + 20;
+  height: @selsize + 50;
+  background: #fff;
+  z-index: 9000000000;
+  border-radius:5px;
+  box-shadow:0 2px 5px #000;
+  a{
+    display: block;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+  }
+  .area{
+    border-radius:2px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: @selsize;
+    height: @selsize;
+    margin-bottom: 100px;
+    background: url('../sprite.jpg') no-repeat;
+    background-size: 100% auto;
+    overflow: hidden;
+
+    .selector{
+      width: 10%;
+      height: 10%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      box-shadow:
+        inset 0 0 0 1px #fff,
+        inset 0 0 5px 2px #fff,
+        0 0 5px #fff;
+      &:before, &:after{
+        content:'';
+        display: block;
+        box-shadow:
+          inset 0 0 0 1px #fff,
+          inset 0 0 15px rgba(0,0,255,0.5),
+          0 0 5px rgba(0,0,255,0.5);
+        position: absolute;
+      }
+      &:before{
+        left:-1000%;
+        top: 0;
+        height: 100%;
+        width:2000%;
+      }
+      &:after{
+        top:-1000%;
+        left: 0;
+        width: 100%;
+        height:2000%;
+      }
+    }
+  }
+}
+
 #setpanel{
   position: fixed;
   padding: 5px 10px;
@@ -33,6 +103,20 @@
   left: 0;
   z-index: 10000000;
   background: rgba(255,255,255,0.3);
+  a{
+    color:#000;
+    text-decoration: none;
+    &:hover{
+      color:#fff;
+    }
+    &:active{
+      color:#F00;
+    }
+  }
+  input{
+    margin: 0 5px;
+    vertical-align: middle;
+  }
 }
 
 .skill{
@@ -44,20 +128,33 @@
   cursor: default !important;
 }
 
+/*@keyframes shake {
+  33%{transform:rotate(2deg);}
+  66%{transform:rotate(-2deg);}
+}
+
+.selected{
+  animation: shake ease-in-out 0.12s infinite;
+}*/
+
+
+@outline:8px;
+
 .selected:before{
   display: block;
   position: absolute;
-  top: -10px;
-  right: -10px;
-  bottom: -10px;
-  left: -10px;
-  border-radius:10px;
-  background: rgba(128,128,255,0.5);
+  top: -@outline;
+  right: -@outline;
+  bottom: -@outline;
+  left: -@outline;
+  border-radius:@outline;
+  background: rgba(255,255,255,0.2);
   z-index: 10;
   content:'';
   border:1px solid #fff;
   box-shadow:
   inset 0 0 15px #00F,
-  0 0 15px #00f;
+  0 0 10px rgba(255,255,255,0.5),
+  0 0 30px #00f;
 
 }

@@ -29,7 +29,7 @@ skilltree.fromJSON = function (jsonObject, parentElement) {
         node.$(parentElement);
     }
     return this;
-}
+};
 
 //TODO: Add abbr
 
@@ -47,43 +47,60 @@ skilltree.buildFromJSON = function(url,parentElement){
         }
     );
 
-}
+};
 
 skilltree.buildJSONOfElement = function(element){
     var json = {};
-    if(element.attr('name'))json.name=element.attr('name');
-    if(element.attr('max'))json.max=element.attr('max');
-    if(element.attr('sprite'))json.sprite=element.attr('sprite');
-    if(element.attr('sprites'))json.sprites=element.attr('sprites');
-    if(element.attr('current'))json.current=element.attr('current');
-    if(element.attr('mustHave'))json.mustHave=element.attr('mustHave');
-    if(skilltree.buildObjFromString(element.attr('dependency')))json.dependency=skilltree.buildObjFromString(element.attr('dependency'));
-    if(element.attr('abbr'))json.dependency=element.attr('dependency');
-    if(element.attr('abbr_color'))json.dependency=element.attr('dependency');
+
+    ['name','max','sprite','sprites','current','mustHave','abbr','abbr_color'].forEach(function(el){
+        if(element.attr(el))json[el]=element.attr(el);
+    });
+
+    var hints = skilltree.buildHintsOfElement(element);
+    if(hints)json.hint=hints;
+
+    var spriteObj = skilltree.buildObjFromString(element.attr('sprites'));
+    if(spriteObj)json.sprites=spriteObj;
+
+    var depObj = skilltree.buildObjFromString(element.attr('dependency'));
+    if(depObj)json.dependency=depObj;
+
     json.pos=[element.offset().left - parseInt(element.css('margin-left')),element.offset().top - parseInt(element.css('margin-top'))];
 
     return json;
-}
+};
 
-// Add hint parsing
+skilltree.buildHintsOfElement = function (element) {
+    var paragraphs = $(element).find('div p');
+    if(typeof paragraphs[0]!='undefined'){
+        var hints = [];
+        paragraphs.each(function(){
+            var hint = {text:$(this).html()};
+            var l = $(this).attr('showlevel');
+            if(l)hint.level=l;
+            hints.push(hint);
+        });
+        return hints;
+    }
+    return false;
+};
 
 skilltree.buildObjFromString = function(str){
     if(typeof str == 'undefined')return false;
     try {
-        console.log(str+' parsed succesfully.');
         eval('var evalResult = {' + str + '}');
     }
     catch(e){
-        console.log(str+' parsing error.');
         return false;
     }
     return evalResult;
-}
+};
 
 skilltree.buildJSON = function(element){
+    if(typeof element == 'undefined')element = $('body');
     var json = {};
     element.find('.skill').each(function(el){
         json[$(this).attr('id')] = skilltree.buildJSONOfElement($(this));
     });
     return json;
-}
+};

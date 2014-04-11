@@ -15,7 +15,45 @@ var dragMe={
             .on('mouseup',dragMe.end)
             .on('mousemove',dragMe.move);
 
+        $('#jsonimport').on('mousedown',function(e){
+            e.stopPropagation();
+            console.log('Import')
+        });
 
+        $('#jsonexport').on('mousedown',function(e){
+            e.stopPropagation();
+            console.log('Export')
+        });
+
+        $('#creanode').on('mousedown',function(e){
+            e.stopPropagation();
+            console.log('New');
+        });
+
+        $('#delnode').on('mousedown',function(e){
+            e.stopPropagation();
+            console.log('Del');
+        });
+
+        dragMe.spritePanel = $('#sprite_selector').hide();
+        dragMe.spritePanel.area = dragMe.spritePanel.find('.area')[0];
+        dragMe.spritePanel.selector = $(dragMe.spritePanel.area).find('.selector');
+        dragMe.spritePanel.appl = dragMe.spritePanel.find('a')[0];
+        dragMe.spritePanel.appl.onmousedown = function(){
+            dragMe.spritePanel.hide();
+        };
+
+        dragMe.spritePanel.area.onmousedown = function(event){
+            event.stopPropagation();
+
+            var coords = $(this).offset();
+
+            var x = Math.floor((event.clientX-coords.left)/$(this).width()*10);
+            var y = Math.floor((event.clientY-coords.top)/$(this).height()*10);
+            dragMe.spritePanel.selector.css({left:(x*10)+'%',top:(y*10)+'%'});
+            $(dragMe.spritePanel.appl).html('Ok ('+x+'x'+y+')');
+
+        }
 
         dragMe.panel = $('#propanel');
 
@@ -23,6 +61,7 @@ var dragMe={
         dragMe.panel.e_id = $('#elid');
         dragMe.panel.e_useabbr = $('#useabbr');
         dragMe.panel.e_abbr = $('#abbr');
+        dragMe.panel.e_hints = $('#hints');
 
         dragMe.panel.on('mousedown',function(event){
             event.stopPropagation();
@@ -56,9 +95,21 @@ var dragMe={
         dragMe.selectedElement.addClass('selected');
 
         dragMe.panel.show();
+
+        var elementData = skilltree.buildJSONOfElement(element);
+
         dragMe.panel.e_title.val(element.attr('name'));
         dragMe.panel.e_id.val(element.attr('id'));
         dragMe.panel.e_abbr.val(element.attr('abbr'));
+
+        dragMe.panel.e_hints.html('');
+        if(elementData.hint) {
+            dragMe.panel.e_hints.html('<label>Hints</label>');
+            elementData.hint.forEach(function (e) {
+                dragMe.panel.e_hints.append('<input type="text" value="' + e.text + '">');
+            });
+        }
+
     },
     unselect:function(event){
         if(dragMe.selectedElement) {

@@ -21,31 +21,47 @@
 
     <div id="propanel">
         <div class="interface">
+
             <div class="panel">
                 <div class="title">Name and description</div>
                 <label for="elid">Element ID</label>
                 <input type="text" id="elid">
                 <label for="title">Name</label>
                 <input type="text" id="title">
-                <input type="submit">
+                <div id="hints"></div>
             </div>
+
             <div class="panel">
+
                 <div class="title">Sprite</div>
-                <label for="useabbr">Use abbreviation instead of sprite</label>
-                <input type="checkbox" id="useabbr">
                 <label for="abbr">Abbreviation</label>
                 <input type="text" id="abbr">
-                <input type="submit">
+
+                <label for="abbr">Abbreviation</label>
+                <input type="text" id="abbr">
+
             </div>
+
         </div>
+    </div>
+
+    <div id="sprite_selector">
+        <div class="area">
+            <div class="selector"></div>
+        </div>
+        <a href="#">Ok</a>
     </div>
 
     <div id="setpanel">
         <label for="showgrid">Show grid </label>
-        <input type="checkbox" id="showgrid"/>
-        <a href="#">Import</a>
-        <a href="#">Export</a>
+        <input type="checkbox" id="showgrid"/> |
+        <a href="#" id="jsonimport">Import from JSON</a> |
+        <a href="#" id="jsonexport">Export as JSON</a> |
+        <a href="#" id="creanode">Create node</a> |
+        <a href="#" id="delnode">Delete node</a>
     </div>
+
+    <div id="tree"></div>
 
 </body>
 </html>
@@ -59,12 +75,11 @@
         skilltree.buttons.each(function () {
             $(this).attr('draggable', 'draggable')
         });
-        console.log('Hey');
         dragMe.init();
     });
 
     $(function(){
-        skilltree.buildFromJSON('../trees/php.json');
+        skilltree.buildFromJSON('../trees/web.json',$('#tree'));
     });
 
 </script>
