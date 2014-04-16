@@ -17,22 +17,27 @@ var dragMe={
 
         $('#jsonimport').on('mousedown',function(e){
             e.stopPropagation();
-            console.log('Import')
+            console.log('Import');
         });
 
         $('#jsonexport').on('mousedown',function(e){
             e.stopPropagation();
-            console.log('Export')
+            $('#copypaste').show().find('#values').html(JSON.stringify(skilltree.buildJSON()));
         });
+
+        $('#copypaste').on('mousedown',function(e){e.stopPropagation();});
 
         $('#creanode').on('mousedown',function(e){
             e.stopPropagation();
             console.log('New');
         });
 
+
         $('#delnode').on('mousedown',function(e){
             e.stopPropagation();
-            console.log('Del');
+            if(confirm('Delete the '+dragMe.selectedElement.attr('id')+' node?')){
+                dragMe.del();
+            }
         });
 
         dragMe.spritePanel = $('#sprite_selector').hide();
@@ -40,6 +45,7 @@ var dragMe={
         dragMe.spritePanel.selector = $(dragMe.spritePanel.area).find('.selector');
         dragMe.spritePanel.appl = dragMe.spritePanel.find('a')[0];
         dragMe.spritePanel.appl.onmousedown = function(){
+            console.log(dragMe.spritePanel.x,dragMe.spritePanel.y);
             dragMe.spritePanel.hide();
         };
 
@@ -50,6 +56,7 @@ var dragMe={
 
             var x = Math.floor((event.clientX-coords.left)/$(this).width()*10);
             var y = Math.floor((event.clientY-coords.top)/$(this).height()*10);
+            dragMe.spritePanel.x=x;dragMe.spritePanel.y=y;
             dragMe.spritePanel.selector.css({left:(x*10)+'%',top:(y*10)+'%'});
             $(dragMe.spritePanel.appl).html('Ok ('+x+'x'+y+')');
 
@@ -62,14 +69,26 @@ var dragMe={
         dragMe.panel.e_useabbr = $('#useabbr');
         dragMe.panel.e_abbr = $('#abbr');
         dragMe.panel.e_hints = $('#hints');
+        dragMe.panel.e_sprite = $('#sprite_image');
 
         dragMe.panel.on('mousedown',function(event){
             event.stopPropagation();
         });
-        dragMe.panel.hide();
+
+        dragMe.panel.e_sprite.on('mousedown',function(event){
+            dragMe.spritePanel.show();
+        });
+
+        dragMe.unselect();
+
         $('#grid').toggle($('#showgrid')[0].checked);
         $('#showgrid').change(function(){$('#grid').toggle(this.checked)});
 
+    },
+    del:function(){
+        dragMe.selectedElement.remove();
+        dragMe.unselect();
+        skilltree.renderAll();
     },
     start:function(event){
 
@@ -89,6 +108,8 @@ var dragMe={
             x:event.clientX - this.offsetLeft,
             y:event.clientY - this.offsetTop
         };
+
+
     },
     select:function(element){
         dragMe.selectedElement = element;
@@ -102,20 +123,33 @@ var dragMe={
         dragMe.panel.e_id.val(element.attr('id'));
         dragMe.panel.e_abbr.val(element.attr('abbr'));
 
+        console.log(elementData);
+
         dragMe.panel.e_hints.html('');
         if(elementData.hint) {
-            dragMe.panel.e_hints.html('<label>Hints</label>');
+            dragMe.panel.e_hints.html('<label>Hints <a onclick="dragMe.newHint();">Add New</a> </label>');
             elementData.hint.forEach(function (e) {
-                dragMe.panel.e_hints.append('<input type="text" value="' + e.text + '">');
+                var lvl = e.level;
+                if(lvl==undefined)lvl='';
+                dragMe.panel.e_hints.append('<div class="hint_body"><input type="text" value="' + lvl + '"><textarea>'+e.text+'</textarea></div>');
             });
         }
 
+        $('#delnode').show();
+
+
+    },
+    newHint:function(){
+        console.log('Hey');
     },
     unselect:function(event){
         if(dragMe.selectedElement) {
             dragMe.selectedElement.removeClass('selected');
             dragMe.selectedElement = null;
         }
+        dragMe.spritePanel.hide();
+        $('#copypaste').hide();
+        $('#delnode').hide();
         dragMe.panel.hide();
     },
     move:function(event){

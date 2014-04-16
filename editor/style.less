@@ -109,9 +109,6 @@
     &:hover{
       color:#fff;
     }
-    &:active{
-      color:#F00;
-    }
   }
   input{
     margin: 0 5px;
@@ -138,6 +135,27 @@
 }*/
 
 
+#copypaste{
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background: #fff;
+  padding:20px;
+  z-index: 200000000;
+  border-radius: 10px;
+  box-shadow: 0 0 50px;
+  textarea{
+    resize: none;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 @outline:8px;
 
 .selected:before{
@@ -157,4 +175,28 @@
   0 0 10px rgba(255,255,255,0.5),
   0 0 30px #00f;
 
+}
+
+.hint_body{
+  textarea{
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+  }
+  background: #ddd;
+  padding: 5px;
+  margin-bottom:5px !important;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#sprite_image{
+  width: 80px;
+  height: 80px;
+  background: #888;
+  box-shadow:inset 0 0 0 2px #666;
+  background-image:
+  linear-gradient(45deg,transparent 49%,#666 49%,#666 51%,transparent 51%),
+  linear-gradient(135deg,transparent 49%,#666 49%,#666 51%,transparent 51%);
+  margin-bottom: 5px !important;
 }
