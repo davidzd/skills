@@ -5,6 +5,7 @@ var dragMe={
     selectedElement:null,
     startPoint:{x:0,y:0},
     panel:null,
+
     init:function(){
         this.draggables = $('[draggable]').each(function(elem){
             $(this).on('mousedown',dragMe.start);
@@ -90,6 +91,9 @@ var dragMe={
         dragMe.unselect();
         skilltree.renderAll();
     },
+
+    dragLocked:true,
+
     start:function(event){
 
         event.stopPropagation();
@@ -99,6 +103,11 @@ var dragMe={
             dragMe.end();
             return;
         }
+
+        // Preventing node movement on selection
+
+        dragMe.dragLocked = true;
+        setTimeout(function(){dragMe.dragLocked=false;},200);
 
         dragMe.unselect();
         dragMe.select($(this));
@@ -153,7 +162,7 @@ var dragMe={
         dragMe.panel.hide();
     },
     move:function(event){
-        if(dragMe.currentDrag==null)return;
+        if(dragMe.currentDrag==null || dragMe.dragLocked)return;
         dragMe.currentDrag.css({
             left: dragMe.okr(event.clientX - dragMe.startPoint.x, 10) + 'px',
             top:dragMe.okr(event.clientY-dragMe.startPoint.y,10)+'px'

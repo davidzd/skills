@@ -281,7 +281,13 @@ module to work.
 [LESS preprocessor](http://lesscss.org) Otherwise it will be a mess. If you are unfamiliar with LESS - please, call
 the seniors. To select sprite from sprite picture - set its coordinates in .bg mixin (see style.less for examples)
 
+## Editor
+
+Will be added later
+
 ## Plans for future
 
  - Avatars and primary skills
+ - Aliases
+ - Merge arrows to editors
  - Non-interactable objects : skill-depending objects like arrows and stuff (medals?), auto-updating non-clickable skills
