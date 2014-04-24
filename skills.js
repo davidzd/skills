@@ -36,6 +36,7 @@ var skilltree = {
     size: 80,
 
     editorMode:false,
+    downgradeDisabled:false,
 
     language:{
         reqTitle: 'Requirements for level {0}:',
@@ -127,7 +128,7 @@ var skilltree = {
 
 
 
-        this.generateAbbrs();
+        this.generateAbbrAll();
         this.renderAll();
 
         $(document).trigger('skillsAfterInit',this);
@@ -164,36 +165,39 @@ var skilltree = {
         this.hint.show();
     },
 
-    generateAbbrs : function(){
+    generateAbbrAll : function(){
         this.buttons.each(function(){
 
-            if(!($(this).hasAttr('sprite')) && !($(this).hasAttr('sprites'))) {
-
-                var abbr = '';
-                if($(this).hasAttr('abbr'))abbr = $(this).attr('abbr');
-                else {
-                    if($(this).hasAttr('name'))abbr=$(this).attr('name').substr(0,2);
-                    else if($(this).hasAttr('skillid'))abbr=$(this).attr('skillid').substr(0,2);
-                    if(abbr!='')abbr = abbr.substr(0,1).toUpperCase() + abbr.substr(1,1).toLowerCase();
-                }
-
-                if(abbr!=''){
-
-                    if(abbr.length>2)$(this).addClass('sm');
-
-                    var color = '';
-                    if($(this).hasAttr('abbr_color'))color = $(this).attr('abbr_color');else color = abbr.randomColor();
-
-                    var textColor = hexColorToGrayscale(color)<128 ? 'color: #FFF;' : 'color: #444;';
-
-                    if(color!='')color = ' style="background:'+color+';'+textColor+'"';
-
-                    $(this).append('<span class="abbr"'+color+'>'+abbr+'</span>');
-                }
-                $(this).addClass('nosprite');
-            }
+            skilltree.generateAbbr($(this));
 
         });
+    },
+    generateAbbr:function(elem){
+        if(!(elem.hasAttr('sprite')) && !(elem.hasAttr('sprites'))) {
+
+            var abbr = '';
+            if(elem.hasAttr('abbr'))abbr = elem.attr('abbr');
+            else {
+                if(elem.hasAttr('name'))abbr=elem.attr('name').substr(0,2);
+                else if(elem.hasAttr('skillid'))abbr=elem.attr('skillid').substr(0,2);
+                elem.attr('abbr',abbr);
+            }
+
+            if(abbr!=''){
+
+                if(abbr.length>2)elem.addClass('sm');
+
+                var color = '';
+                if(elem.hasAttr('abbr_color'))color = elem.attr('abbr_color');else color = abbr.randomColor();
+
+                var textColor = hexColorToGrayscale(color)<128 ? 'color: #FFF;' : 'color: #444;';
+
+                if(color!='')color = ' style="background:'+color+';'+textColor+'"';
+
+                elem.append('<span class="abbr"'+color+'>'+abbr+'</span>');
+            }
+            elem.addClass('nosprite');
+        }
     },
 
     buildDependencyHint: function(obj){
@@ -295,6 +299,8 @@ var skilltree = {
 
     isDowngradePossible: function(obj) {
 
+        if(this.downgradeDisabled)return false;
+
         var id =  obj.attr('skillid');
         var levelFrom = obj.attrInt('current',0);
         if(levelFrom<=0)return false;
@@ -354,7 +360,7 @@ var skilltree = {
         // Modifying the sprite if any
 
         var sprite = this.getSprite(obj, current);
-        if(sprite != false)obj.css('background-position', '-' + (parseInt(sprite[0]) * this.size) + 'px -' + (parseInt(sprite[1]) * this.size) + 'px');
+        if(sprite != false)obj.css('background-position', skilltree.getSpriteBackgroundPosition(sprite[0],sprite[1]));
 
         // Making already upgraded active
 
@@ -385,6 +391,11 @@ var skilltree = {
         $(document).trigger('skillsAfterRender',that);
     },
 
+    // Getting CSS for sprite
+
+    getSpriteBackgroundPosition:function(x,y){
+        return '-' + (parseInt(x) * this.size) + 'px -' + (parseInt(y) * this.size) + 'px'
+    },
 
     // Export/import as JSON
 

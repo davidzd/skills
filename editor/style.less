@@ -1,10 +1,27 @@
-#grid{
-  position: absolute;
-  display: none;
+.fill(){
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.dialog(@width:400px; @height:400px; @padding:20px){
+  .fill();
+  padding: @padding;
+  background: #fff;
+  margin: auto;
+  position: fixed;
+  z-index: 2323232;
+  border-radius: 5px;
+  width: @width - (@padding * 2);
+  height: @height - (@padding * 2);
+  box-shadow: 0 2px 5px #000;
+}
+
+#grid{
+  .fill();
+  position: absolute;
+  display: none;
   z-index: -1;
   pointer-events: none;
   background-image:
@@ -30,16 +47,7 @@
 #sprite_selector{
   position: fixed;
   margin: auto;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  width: @selsize + 20;
-  height: @selsize + 50;
-  background: #fff;
-  z-index: 9000000000;
-  border-radius:5px;
-  box-shadow:0 2px 5px #000;
+  .dialog(@selsize + 20; @selsize + 50);
   a{
     display: block;
     position: absolute;
@@ -60,6 +68,7 @@
     overflow: hidden;
 
     .selector{
+      transition:all 0.3s;
       width: 10%;
       height: 10%;
       position: absolute;
@@ -177,7 +186,7 @@
 
 }
 
-.hint_body{
+.group{
   textarea{
     width: 100%;
     height: 100px;
@@ -199,4 +208,25 @@
   linear-gradient(45deg,transparent 49%,#666 49%,#666 51%,transparent 51%),
   linear-gradient(135deg,transparent 49%,#666 49%,#666 51%,transparent 51%);
   margin-bottom: 5px !important;
+}
+
+#creanode_dialog{
+  .dialog(400px;180px);
+  background: #fff;
+}
+.dialog{
+  display: none;
+  .err{
+    color: #C00;
+    font-weight: bold;
+  }
+  label{
+    display: block;
+  }
+  input{
+    margin-bottom: 10px;
+  }
+  button{
+    margin-right: 5px;
+  }
 }
