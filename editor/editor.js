@@ -12,8 +12,9 @@ var skillsEditor={
 
 
     initDrag:function(){
-        this.draggables = $('[draggable]').each(function(elem){
-            $(this).on('mousedown',skillsEditor.startDrag);
+        this.draggables = $('[draggable]');
+        this.draggables.each(function(elem){
+            this.onmousedown=skillsEditor.startDrag; // Making sure the drag event is only one.
         });
     },
 
@@ -132,9 +133,9 @@ var skillsEditor={
 
     create_node:function(id,title){
         var new_node = new skill(id).name(title).pos(20,20).param('draggable','draggable').$();
-        skillsEditor.initDrag();
         skilltree.generateAbbr(new_node);
         skilltree.render(new_node);
+        skillsEditor.initDrag();
 
     },
 
