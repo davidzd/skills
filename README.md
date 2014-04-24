@@ -27,6 +27,14 @@ You can add attributes to it - "current" and "max"
 
 This will produce a skill that is clickable 3 times and already clicked once.
 
+## Sprite
+
+You can set a skill sprite by setting "sprite" parameter like this:
+
+    <div class="skill" sprite="5x7"></div>
+
+Where 5x7 means sixth sprite in eighth row of sprite.jpg file
+
 ## Dependant skills
 
 Also you can create skills that are depending on other ones. This can be done easily:
