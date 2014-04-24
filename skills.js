@@ -266,13 +266,16 @@ var skilltree = {
 
         // TODO: Sprites for level ranges
 
-        try { eval('var evalResult = {' + obj.attr('sprites') + '}');}
-        catch(e) {
-            console.log('Error in evaluating',obj.attr('sprites'));
-            var evalResult = false;
+        if(obj.hasAttr('sprites')) {
+            try {
+                eval('var evalResult = {' + obj.attr('sprites') + '}');
+            }
+            catch (e) {
+                console.log('Error in evaluating', obj.attr('sprites'));
+                var evalResult = false;
+            }
+            if (evalResult && level && evalResult[level])sprite = evalResult[level];
         }
-
-        if(evalResult && level && evalResult[level])sprite = evalResult[level];
         return sprite;
     },
 
