@@ -52,7 +52,7 @@ skilltree.buildFromJSON = function(url,parentElement){
 skilltree.buildJSONOfElement = function(element){
     var json = {};
 
-    ['name','max','sprite','sprites','current','mustHave','abbr','abbr_color'].forEach(function(el){
+    ['name','max','sprite','current','mustHave','abbr','abbr_color'].forEach(function(el){
         if(element.attr(el))json[el]=element.attr(el);
     });
 

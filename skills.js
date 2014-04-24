@@ -256,20 +256,24 @@ var skilltree = {
     // Getting and evauluating complex dependency for obj's level.
 
     getSprite: function(obj, level) {
-        if(!obj.hasAttr('sprites'))return false;
-        try {
-            eval('var evalResult = {' + obj.attr('sprites') + '}');
-        }
+
+        if(!obj.hasAttr('sprites') && !obj.hasAttr('sprite'))return false;
+
+        var sprite = false;
+
+
+        if(obj.hasAttr('sprite'))sprite = obj.attr('sprite').split('x');
+
+        // TODO: Sprites for level ranges
+
+        try { eval('var evalResult = {' + obj.attr('sprites') + '}');}
         catch(e) {
             console.log('Error in evaluating',obj.attr('sprites'));
-            return false;
+            var evalResult = false;
         }
 
-        if(typeof level != 'undefined') {
-            if(typeof evalResult[level] != 'undefined')return evalResult[level];
-            else return false;
-        }
-        else return false;
+        if(evalResult && level && evalResult[level])sprite = evalResult[level];
+        return sprite;
     },
 
     // Checking, if upgrade of obj to level forLevel is possible

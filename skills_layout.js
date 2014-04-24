@@ -70,6 +70,7 @@ var skill = function(id){
     }
 
     this.sprite = function(x,y){
+        this.params['sprite']=x+'x'+y;
         x*=80;
         y*=80;
         this.styles['background-position'] = '-'+x+'px -'+y+'px';

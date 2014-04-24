@@ -221,6 +221,13 @@ var skillsEditor={
             });
         }
 
+
+        if(elementData.sprites){
+            for(var lvl in elementData.sprites){
+                console.log(elementData.sprites)
+            }
+        }
+
         $('#delnode').show();
     },
 

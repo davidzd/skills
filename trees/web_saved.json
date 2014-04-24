@@ -57,6 +57,7 @@
     "max": "2",
     "current": "0",
     "abbr": "CSS",
+    "sprite":[7,6],
     "hint": [
         {
             "text": "Cascade Styling Stuff",

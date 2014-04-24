@@ -49,6 +49,7 @@
     },
     "css":{
         "name":"CSS",
+        "sprite":[7,6],
         "max":2,
         "pos":[300,200],
 		"abbr": "CSS",
