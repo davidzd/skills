@@ -211,20 +211,19 @@ var skillsEditor={
 
         console.log(elementData);
 
-        skillsEditor.panel.e_hints.html('');
+        skillsEditor.panel.e_hints.html('<label for="hints">Sprite hint</label><div class="group">No hints set <a href="#" onclick="skillsEditor.newHint()">(Add New)</a></div>');
         if(elementData.hint) {
-            skillsEditor.panel.e_hints.html('<label>Hints <a onclick="skillsEditor.newHint();">Add New</a> </label>');
+            skillsEditor.panel.e_hints.html('<label for="hints">Hints <a onclick="skillsEditor.newHint();">Add New</a> </label>');
             elementData.hint.forEach(function (e) {
                 var lvl = e.level;
                 if(lvl==undefined)lvl='';
-                skillsEditor.panel.e_hints.append('<div class="group"><input type="text" value="' + lvl + '"><textarea>'+e.text+'</textarea></div>');
+                skillsEditor.panel.e_hints.append('<div class="group"><label>Levels</label><input type="text" value="' + lvl + '"><label>Hint text</label><textarea>'+e.text+'</textarea></div>');
             });
         }
 
-
         if(elementData.sprites){
             for(var lvl in elementData.sprites){
-                console.log(elementData.sprites)
+                console.log(elementData.sprites[lvl]);
             }
         }
 
