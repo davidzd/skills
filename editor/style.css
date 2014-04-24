@@ -106,7 +106,6 @@
   vertical-align: middle;
 }
 .skill {
-  transition: all linear 0.05s;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

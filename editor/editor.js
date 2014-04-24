@@ -1,11 +1,11 @@
 var skillsEditor={
 
     draggables:[],
-    currentDrag:null,
+    currentElement:null,
     selectedElement:null,
     startPoint:{x:0,y:0},
     panel:null,
-
+    grid:false,
     /**
      * The function that initializes the editor. Should be called once on page load.
      */
@@ -13,7 +13,7 @@ var skillsEditor={
 
     initDrag:function(){
         this.draggables = $('[draggable]');
-        this.draggables.each(function(elem){
+        this.draggables.each(function(){
             this.onmousedown=skillsEditor.startDrag; // Making sure the drag event is only one.
         });
     },
@@ -42,7 +42,7 @@ var skillsEditor={
 
         $('#creanode').on('mousedown',function(e){
             e.stopPropagation();
-            newnode_dialog = $('#creanode_dialog');
+            var newnode_dialog = $('#creanode_dialog');
             var id_field = newnode_dialog.find('#new_node_id').val('')[0];
             var title_field = newnode_dialog.find('#new_node_name').val('')[0];
             var err = newnode_dialog.find('.err').html('');
@@ -80,49 +80,61 @@ var skillsEditor={
             }
         });
 
+        // -- Sprite selection panel
+
         skillsEditor.spritePanel = $('#sprite_selector').hide();
-        skillsEditor.spritePanel.area = skillsEditor.spritePanel.find('.area')[0];
-        skillsEditor.spritePanel.selector = $(skillsEditor.spritePanel.area).find('.selector');
-        skillsEditor.spritePanel.appl = skillsEditor.spritePanel.find('a')[0];
-        skillsEditor.spritePanel.appl.onmousedown = function(){
-            console.log(skillsEditor.spritePanel.x,skillsEditor.spritePanel.y);
+        skillsEditor.spritePanel.e={
+            area:skillsEditor.spritePanel.find('.area')[0],
+            selector:skillsEditor.spritePanel.find('.selector'),
+            appl:skillsEditor.spritePanel.find('a')[0]
+        };
+
+        skillsEditor.spritePanel.e.appl.onmousedown = function(){
+            console.log(skillsEditor.spritePanel.e.x,skillsEditor.spritePanel.e.y);
+            //skillsEditor.currentElement
             skillsEditor.spritePanel.hide();
         };
 
-        skillsEditor.spritePanel.area.onmousedown = function(event){
+        skillsEditor.spritePanel.e.area.onmousedown = function(event){
             event.stopPropagation();
 
             var coords = $(this).offset();
 
             var x = Math.floor((event.clientX-coords.left)/$(this).width()*10);
             var y = Math.floor((event.clientY-coords.top)/$(this).height()*10);
-            skillsEditor.spritePanel.x=x;skillsEditor.spritePanel.y=y;
-            skillsEditor.spritePanel.selector.css({left:(x*10)+'%',top:(y*10)+'%'});
-            $(skillsEditor.spritePanel.appl).html('Ok ('+x+'x'+y+')');
+            $.extend(skillsEditor.spritePanel.e,{x:x,y:y});
 
-        }
+            skillsEditor.spritePanel.e.selector.css({left:(x*10)+'%',top:(y*10)+'%'});
+            $(skillsEditor.spritePanel.e.appl).html('Ok ('+x+'x'+y+')');
+
+        };
+
+        // -- Option panel definition
 
         skillsEditor.panel = $('#propanel');
 
-        skillsEditor.panel.e_title = $('#title');
-        skillsEditor.panel.e_id = $('#elid');
-        skillsEditor.panel.e_useabbr = $('#useabbr');
-        skillsEditor.panel.e_abbr = $('#abbr');
-        skillsEditor.panel.e_hints = $('#hints');
-        skillsEditor.panel.e_sprite = $('#sprite_image');
+        skillsEditor.panel.e = {
+            title:$('#title'),
+            id:$('#elid'),
+            abbr:$('#abbr'),
+            hints:$('#hints'),
+            sprite:$('#sprite_image')
+        };
 
         skillsEditor.panel.on('mousedown',function(event){
             event.stopPropagation();
         });
 
-        skillsEditor.panel.e_sprite.on('mousedown',function(event){
+        skillsEditor.panel.e.sprite.on('mousedown',function(){
             skillsEditor.spritePanel.show();
         });
 
         skillsEditor.unselect();
 
-        $('#grid').toggle($('#showgrid')[0].checked);
-        $('#showgrid').change(function(){$('#grid').toggle(this.checked)});
+        var showgrid = $('#showgrid');
+        skillsEditor.grid=showgrid[0].checked;
+        $('#grid').toggle(skillsEditor.grid);
+        showgrid.change(function(){skillsEditor.grid=this.checked;$('#grid').toggle(this.checked)});
 
     },
     del:function(){
@@ -135,8 +147,7 @@ var skillsEditor={
         var new_node = new skill(id).name(title).pos(20,20).param('draggable','draggable').$();
         skilltree.generateAbbr(new_node);
         skilltree.render(new_node);
-        skillsEditor.initDrag();
-
+        new_node[0].onmousedown=skillsEditor.startDrag;
     },
 
     dragLocked:true,
@@ -151,7 +162,7 @@ var skillsEditor={
         event.stopPropagation();
         event.preventDefault();
 
-        if(skillsEditor.currentDrag!=null){
+        if(skillsEditor.currentElement!=null){
             skillsEditor.stopDrag();
             return;
         }
@@ -164,13 +175,11 @@ var skillsEditor={
         skillsEditor.unselect();
         skillsEditor.select($(this));
 
-        skillsEditor.currentDrag = $(this).css({'z-index':100000,'position':'absolute'});
+        skillsEditor.currentElement = $(this).css({'z-index':100000,'position':'absolute'});
         skillsEditor.startPoint = {
             x:event.clientX - this.offsetLeft,
             y:event.clientY - this.offsetTop
         };
-
-
     },
 
     /**
@@ -178,20 +187,31 @@ var skillsEditor={
      * @param event Mouse event
      */
     drag:function(event){
-        if(skillsEditor.currentDrag==null || skillsEditor.dragLocked)return;
-        skillsEditor.currentDrag.css({
-            left: skillsEditor.okr(event.clientX - skillsEditor.startPoint.x, 10) + 'px',
-            top:skillsEditor.okr(event.clientY-skillsEditor.startPoint.y,10)+'px'
+        if(skillsEditor.currentElement==null || skillsEditor.dragLocked)return;
+
+        var c = {
+            x:event.clientX - skillsEditor.startPoint.x,
+            y:event.clientY - skillsEditor.startPoint.y
+        };
+        if(skillsEditor.grid){c={
+            x:skillsEditor.okr(c.x,10),
+            y:skillsEditor.okr(c.y,10)
+        }}
+
+        skillsEditor.currentElement.css({
+            left: c.x + 'px',
+            top: c.y+'px'
         });
+
     },
 
     /**
      * The function that is triggered when the mouse is released
      */
     stopDrag:function(){
-        if(skillsEditor.currentDrag==null)return;
-        skillsEditor.currentDrag.css('z-index','');
-        skillsEditor.currentDrag=null;
+        if(skillsEditor.currentElement==null)return;
+        skillsEditor.currentElement.css('z-index','');
+        skillsEditor.currentElement=null;
     },
 
     /**
@@ -206,19 +226,19 @@ var skillsEditor={
 
         var elementData = skilltree.buildJSONOfElement(element);
 
-        skillsEditor.panel.e_title.val(element.attr('name'));
-        skillsEditor.panel.e_id.val(element.attr('id'));
-        skillsEditor.panel.e_abbr.val(element.attr('abbr'));
+        skillsEditor.panel.e.title.val(element.attr('name'));
+        skillsEditor.panel.e.id.val(element.attr('id'));
+        skillsEditor.panel.e.abbr.val(element.attr('abbr'));
 
         console.log(elementData);
 
-        skillsEditor.panel.e_hints.html('<label for="hints">Sprite hint</label><div class="group">No hints set <a href="#" onclick="skillsEditor.newHint()">(Add New)</a></div>');
+        skillsEditor.panel.e.hints.html('<label for="hints">Sprite hint</label><div class="group">No hints set <a href="#" onclick="skillsEditor.newHint()">(Add New)</a></div>');
         if(elementData.hint) {
-            skillsEditor.panel.e_hints.html('<label for="hints">Hints <a onclick="skillsEditor.newHint();">Add New</a> </label>');
+            skillsEditor.panel.e.hints.html('<label for="hints">Hints <a onclick="skillsEditor.newHint();">Add New</a> </label>');
             elementData.hint.forEach(function (e) {
                 var lvl = e.level;
                 if(lvl==undefined)lvl='';
-                skillsEditor.panel.e_hints.append('<div class="group"><label>Levels</label><input type="text" value="' + lvl + '"><label>Hint text</label><textarea>'+e.text+'</textarea></div>');
+                skillsEditor.panel.e.hints.append('<div class="group"><label>Levels</label><input type="text" value="' + lvl + '"><label>Hint text</label><textarea>'+e.text+'</textarea></div>');
             });
         }
 
