@@ -59,15 +59,18 @@ var skill = function(id){
         setHint();
         setStyles();
         this.param('class',this.classes);
-        return '<div'+getParams()+'><div>'+this.hintText+'</div></div>';
+        return $('<div'+getParams()+'><div>'+this.hintText+'</div></div>');
     }
 
     this.$ = function(element){
         if(typeof element=='undefined')element='body';
-        $(element).append(this._());
+        var code = this._();
+        $(element).append(code);
+        return code;
     }
 
     this.sprite = function(x,y){
+        this.params['sprite']=x+'x'+y;
         x*=80;
         y*=80;
         this.styles['background-position'] = '-'+x+'px -'+y+'px';

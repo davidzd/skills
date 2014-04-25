@@ -35,6 +35,9 @@ var skilltree = {
     hint: '',
     size: 80,
 
+    editorMode:false,
+    downgradeDisabled:false,
+
     language:{
         reqTitle: 'Requirements for level {0}:',
         req: '<h4>{1}</h4><ul class="reqs">{0}</ul>',
@@ -58,67 +61,74 @@ var skilltree = {
             this.hint = obj.find('.skillHint');
         }
 
+        if(!this.editorMode) {
+            this.buttons.click(function (e) {
+                if (e.button == 0) {
+                    if ($(this).hasClass('available')) {
+                        var current = $(this).attrInt('current');
+                        var max = $(this).attrInt('max');
 
-        this.buttons.click(function(e) {
-            if(e.button == 0) {
-                if($(this).hasClass('available')) {
+                        if (current < max) {
+                            current = current + 1;
+                            $(this).attr('current', current);
+                            that.renderAll();
+                            $(document).trigger('skillsAfterChange', that);
+                        }
+
+                        that.rebuildHint($(this), e);
+                    }
+                }
+                return false;
+
+            });
+
+            this.buttons.bind('contextmenu', function (e) {
+                if (that.isDowngradePossible($(this))) {
                     var current = $(this).attrInt('current');
-                    var max = $(this).attrInt('max');
-
-                    if(current < max) {
-                        current = current + 1;
+                    if (current > 0) {
+                        current = current - 1;
                         $(this).attr('current', current);
                         that.renderAll();
-                        $(document).trigger('skillsAfterChange',that);
+
+                        $(document).trigger('skillsAfterChange', that);
                     }
-
-                    that.rebuildHint($(this),e);
                 }
-            }
-            return false;
-
-        });
-
-        this.buttons.bind('contextmenu', function(e) {
-            if(that.isDowngradePossible($(this))){
-                var current = $(this).attrInt('current');
-                if(current > 0) {
-                    current = current - 1;
-                    $(this).attr('current', current);
-                    that.renderAll();
-
-                    $(document).trigger('skillsAfterChange',that);
-                }
-            }
-            return false;
-        });
-
-
-
-
-        // Showing and hiding the tooltip
-
-        this.buttons.hover(
-            function(e) {
-                that.rebuildHint($(this),e);
-            },
-            function() {
-                that.hint.html('');
-                that.hint.hide();
-            }
-        );
-
-        //TODO: Check dimensions for tooltip
-        // Moving the tooltip
-
-        this.buttons.mousemove(function(e) {
-            that.hint.css({
-                left: e.pageX,
-                top: e.pageY
+                return false;
             });
-        })
 
-        this.generateAbbrs();
+
+            // Showing and hiding the tooltip
+
+            this.buttons.hover(
+                function(e) {
+                    that.rebuildHint($(this),e);
+                },
+                function() {
+                    that.hint.html('');
+                    that.hint.hide();
+                }
+            );
+
+            //TODO: Check dimensions for tooltip
+            // Moving the tooltip
+
+            this.buttons.mousemove(function(e) {
+                that.hint.css({
+                    left: e.pageX,
+                    top: e.pageY
+                });
+            })
+
+        }
+
+
+
+
+
+
+
+
+        this.generateAbbrAll();
         this.renderAll();
 
         $(document).trigger('skillsAfterInit',this);
@@ -155,36 +165,39 @@ var skilltree = {
         this.hint.show();
     },
 
-    generateAbbrs : function(){
+    generateAbbrAll : function(){
         this.buttons.each(function(){
 
-            if(!($(this).hasAttr('sprite')) && !($(this).hasAttr('sprites'))) {
-
-                var abbr = '';
-                if($(this).hasAttr('abbr'))abbr = $(this).attr('abbr');
-                else {
-                    if($(this).hasAttr('name'))abbr=$(this).attr('name').substr(0,2);
-                    else if($(this).hasAttr('skillid'))abbr=$(this).attr('skillid').substr(0,2);
-                    if(abbr!='')abbr = abbr.substr(0,1).toUpperCase() + abbr.substr(1,1).toLowerCase();
-                }
-
-                if(abbr!=''){
-
-                    if(abbr.length>2)$(this).addClass('sm');
-
-                    var color = '';
-                    if($(this).hasAttr('abbr_color'))color = $(this).attr('abbr_color');else color = abbr.randomColor();
-
-                    var textColor = hexColorToGrayscale(color)<128 ? 'color: #FFF;' : 'color: #444;';
-
-                    if(color!='')color = ' style="background:'+color+';'+textColor+'"';
-
-                    $(this).append('<span class="abbr"'+color+'>'+abbr+'</span>');
-                }
-                $(this).addClass('nosprite');
-            }
+            skilltree.generateAbbr($(this));
 
         });
+    },
+    generateAbbr:function(elem){
+        if(!(elem.hasAttr('sprite')) && !(elem.hasAttr('sprites'))) {
+
+            var abbr = '';
+            if(elem.hasAttr('abbr'))abbr = elem.attr('abbr');
+            else {
+                if(elem.hasAttr('name'))abbr=elem.attr('name').substr(0,2);
+                else if(elem.hasAttr('skillid'))abbr=elem.attr('skillid').substr(0,2);
+                elem.attr('abbr',abbr);
+            }
+
+            if(abbr!=''){
+
+                if(abbr.length>2)elem.addClass('sm');
+
+                var color = '';
+                if(elem.hasAttr('abbr_color'))color = elem.attr('abbr_color');else color = abbr.randomColor();
+
+                var textColor = hexColorToGrayscale(color)<128 ? 'color: #FFF;' : 'color: #444;';
+
+                if(color!='')color = ' style="background:'+color+';'+textColor+'"';
+
+                elem.append('<span class="abbr"'+color+'>'+abbr+'</span>');
+            }
+            elem.addClass('nosprite');
+        }
     },
 
     buildDependencyHint: function(obj){
@@ -243,20 +256,27 @@ var skilltree = {
     // Getting and evauluating complex dependency for obj's level.
 
     getSprite: function(obj, level) {
-        if(!obj.hasAttr('sprites'))return false;
-        try {
-            eval('var evalResult = {' + obj.attr('sprites') + '}');
-        }
-        catch(e) {
-            console.log('Error in evaluating',obj.attr('sprites'));
-            return false;
-        }
 
-        if(typeof level != 'undefined') {
-            if(typeof evalResult[level] != 'undefined')return evalResult[level];
-            else return false;
+        if(!obj.hasAttr('sprites') && !obj.hasAttr('sprite'))return false;
+
+        var sprite = false;
+
+
+        if(obj.hasAttr('sprite'))sprite = obj.attr('sprite').split('x');
+
+        // TODO: Sprites for level ranges
+
+        if(obj.hasAttr('sprites')) {
+            try {
+                eval('var evalResult = {' + obj.attr('sprites') + '}');
+            }
+            catch (e) {
+                console.log('Error in evaluating', obj.attr('sprites'));
+                var evalResult = false;
+            }
+            if (evalResult && level && evalResult[level])sprite = evalResult[level];
         }
-        else return false;
+        return sprite;
     },
 
     // Checking, if upgrade of obj to level forLevel is possible
@@ -285,6 +305,8 @@ var skilltree = {
     // Checking if downgrade is possible
 
     isDowngradePossible: function(obj) {
+
+        if(this.downgradeDisabled)return false;
 
         var id =  obj.attr('skillid');
         var levelFrom = obj.attrInt('current',0);
@@ -345,7 +367,7 @@ var skilltree = {
         // Modifying the sprite if any
 
         var sprite = this.getSprite(obj, current);
-        if(sprite != false)obj.css('background-position', '-' + (parseInt(sprite[0]) * this.size) + 'px -' + (parseInt(sprite[1]) * this.size) + 'px');
+        if(sprite != false)obj.css('background-position', skilltree.getSpriteBackgroundPosition(sprite[0],sprite[1]));
 
         // Making already upgraded active
 
@@ -376,6 +398,11 @@ var skilltree = {
         $(document).trigger('skillsAfterRender',that);
     },
 
+    // Getting CSS for sprite
+
+    getSpriteBackgroundPosition:function(x,y){
+        return '-' + (parseInt(x) * this.size) + 'px -' + (parseInt(y) * this.size) + 'px'
+    },
 
     // Export/import as JSON
 
