@@ -89,10 +89,11 @@ var skillsEditor={
             appl:skillsEditor.spritePanel.find('a')[0]
         };
 
-        skillsEditor.spritePanel.e.appl.onmousedown = function(){
-            console.log(skillsEditor.spritePanel.e.x,skillsEditor.spritePanel.e.y);
-            //skillsEditor.currentElement
+        skillsEditor.spritePanel.e.appl.onmousedown = function(e){
+            e.stopPropagation();
             skillsEditor.spritePanel.hide();
+            skillsEditor.spritePanel.activeSprite.attr('sprite-x',skillsEditor.spritePanel.e.x).attr('sprite-y',skillsEditor.spritePanel.e.y);
+            skillsEditor.drawSpriteCell(skillsEditor.spritePanel.activeSprite);
         };
 
         skillsEditor.spritePanel.e.area.onmousedown = function(event){
@@ -126,6 +127,7 @@ var skillsEditor={
         });
 
         skillsEditor.panel.e.sprite.on('mousedown',function(){
+            skillsEditor.spritePanel.activeSprite = $(this);
             skillsEditor.spritePanel.show();
         });
 
@@ -268,6 +270,17 @@ var skillsEditor={
 
     newHint:function(){
         console.log('Hey');
+    },
+
+    /**
+     * The function that draws ('renders') sprite cell background
+     * @param element jQuery object element
+     */
+    drawSpriteCell: function (element) {
+        var x = element.attr('sprite-x');
+        var y = element.attr('sprite-y');
+        if(!x || !y)return;
+        element.css('background','url("../sprite.jpg") '+skilltree.getSpriteBackgroundPosition(x,y))
     },
 
     /**

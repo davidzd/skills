@@ -20,10 +20,7 @@
     <div id="grid"></div>
 
 
-
-    <div id="copypaste" style="display:none;">
-        <textarea name="copypaste" id="values"></textarea>
-    </div>
+    <div id="copypaste" style="display:none;"><textarea name="copypaste" id="values"></textarea></div>
 
     <div id="propanel" style="display:none;">
         <div class="interface">
@@ -62,16 +59,16 @@
     </div>
 
     <div id="setpanel">
-        <label for="showgrid">Show grid </label>
+        <label for="showgrid">Align to grid </label>
         <input type="checkbox" id="showgrid"/> |
         <a href="#" id="jsonimport">Import from JSON</a> |
         <a href="#" id="jsonexport">Export as JSON</a> |
-        <a href="#" id="creanode">Create node</a>
+        <a href="#" id="creanode">Create node |</a>
+        <a href="#" id="creacon">Create connection</a>
         <a href="#" id="delnode">| Delete node</a>
     </div>
 
     <div id="creanode_dialog" class="dialog">
-
         <label for="new_node_id">Node id (as short as possible, alpha and unique)</label>
         <input type="text" id="new_node_id"/>
         <label for="new_node_name">Node title</label>
@@ -79,6 +76,7 @@
         <button id="new_node_create">Create</button><button id="new_node_cancel">Cancel</button>
         <div class="err"></div>
     </div>
+
     <div id="tree"></div>
 
 </body>
