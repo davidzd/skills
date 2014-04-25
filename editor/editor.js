@@ -93,6 +93,9 @@ var skillsEditor={
             e.stopPropagation();
             skillsEditor.spritePanel.hide();
             skillsEditor.spritePanel.activeSprite.attr('sprite-x',skillsEditor.spritePanel.e.x).attr('sprite-y',skillsEditor.spritePanel.e.y);
+
+            skillsEditor.selectedElement.attr('sprite',skillsEditor.spritePanel.e.x+'x'+skillsEditor.spritePanel.e.y).removeClass('nosprite');
+            skilltree.render(skillsEditor.selectedElement);
             skillsEditor.drawSpriteCell(skillsEditor.spritePanel.activeSprite);
         };
 
