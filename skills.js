@@ -37,6 +37,25 @@ hexColorToGrayscale = function (str) {
 	return (parseInt(str.substr(0, 2), 16) + parseInt(str.substr(2, 2), 16) + parseInt(str.substr(4, 2), 16)) / 3;
 }
 
+
+var skillpoints_dependency = true;
+var skillpoints = 4;
+function updateSkillPoints(value) {
+	if (skillpoints_dependency == true) {
+		skillpoints += value;
+	}
+	$('#skillpoints').text(skillpoints);
+	return skillpoints;
+}
+// Check skill points availability before level-up skill.
+function checkSkillPointsAvailability() {
+	var availability = true;
+	if (skillpoints_dependency == true && skillpoints <= 0) {
+		availability = false;
+	}
+	return availability;
+}
+
 var skilltree = {
 	buttons: '',
 	hint: '',
@@ -66,10 +85,12 @@ var skilltree = {
 			this.hint = obj.find('.skillHint');
 		}
 
-		// TODO check skill points availability before level-up skill.
 		if (!this.editorMode) {
 			this.buttons.click(function (e) {
 				if (e.button == 0) {
+					if (!checkSkillPointsAvailability())
+						return false
+
 					if ($(this).hasClass('available')) {
 						var current = $(this).attrInt('current');
 						var max = $(this).attrInt('max');
@@ -77,7 +98,9 @@ var skilltree = {
 						if (current < max) {
 							current = current + 1;
 							$(this).attr('current', current);
+							updateSkillPoints(-1); // Decrementation of skillpoints.
 							that.renderAll();
+
 							$(document).trigger('skillsAfterChange', that);
 						}
 
@@ -94,6 +117,7 @@ var skilltree = {
 					if (current > 0) {
 						current = current - 1;
 						$(this).attr('current', current);
+						updateSkillPoints(1); // Incrementation of skillpoints.
 						that.renderAll();
 
 						$(document).trigger('skillsAfterChange', that);
@@ -320,6 +344,10 @@ var skilltree = {
 	},
 	// Checking, if upgrade of obj to level forLevel is possible
 	isDependencyMet: function (obj, forLevel) {
+		// If we don't have enough skill points.
+		if (!checkSkillPointsAvailability())
+			return false;
+
 		var dep = this.getDependency(obj, forLevel);
 		var mustHave = obj.attr('musthave');
 		var group_dep = this.getGroupDependency(obj, forLevel);
@@ -361,7 +389,7 @@ var skilltree = {
 
 		if (dependencymet == true && group_dependencymet == true)
 			return true;
-		else 
+		else
 			return false;
 	},
 	// Checking if downgrade is possible
@@ -411,19 +439,19 @@ var skilltree = {
 							if ($(this).attr('id') != my_id && $(this).attr('id') != id) {
 								if ($(this).attr('group') == group) {
 									var canIncrementActiveSkill = false
-									if($(this).is('[group_dependency]')){
+									if ($(this).is('[group_dependency]')) {
 										var group_dep_trouver = that.getGroupDependency($(this));
 										$.each(group_dep_trouver[1], function (group_trouver, lvl_trouver_required) {
-											if(group_trouver == group && lvl_trouver_required < lvl_required){
+											if (group_trouver == group && lvl_trouver_required < lvl_required) {
 												canIncrementActiveSkill = true;
 											}
 										});
 									}
-									else{
+									else {
 										canIncrementActiveSkill = true;
 									}
-									
-									if(canIncrementActiveSkill == true){
+
+									if (canIncrementActiveSkill == true) {
 										activeSkillFromGroup++;
 									}
 								}
