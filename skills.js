@@ -38,26 +38,10 @@ hexColorToGrayscale = function (str) {
 }
 
 
-var skillpoints_dependency = true;
-var skillpoints = 4;
-function updateSkillPoints(value) {
-	if (skillpoints_dependency == true) {
-		skillpoints += value;
-	}
-	$('#skillpoints').text(skillpoints);
-	return skillpoints;
-}
-// Check skill points availability before level-up skill.
-function checkSkillPointsAvailability() {
-	var availability = true;
-	if (skillpoints_dependency == true && skillpoints <= 0) {
-		availability = false;
-	}
-	return availability;
-}
-
 var skilltree = {
 	buttons: '',
+	skillpoints_dependency: true,
+	skillpoints: 4,
 	hint: '',
 	size: 80,
 	editorMode: false,
@@ -88,7 +72,7 @@ var skilltree = {
 		if (!this.editorMode) {
 			this.buttons.click(function (e) {
 				if (e.button == 0) {
-					if (!checkSkillPointsAvailability())
+					if (!skilltree.checkSkillPointsAvailability())
 						return false
 
 					if ($(this).hasClass('available')) {
@@ -98,7 +82,7 @@ var skilltree = {
 						if (current < max) {
 							current = current + 1;
 							$(this).attr('current', current);
-							updateSkillPoints(-1); // Decrementation of skillpoints.
+							skilltree.updateSkillPoints(-1); // Decrementation of skillpoints.
 							that.renderAll();
 
 							$(document).trigger('skillsAfterChange', that);
@@ -117,7 +101,7 @@ var skilltree = {
 					if (current > 0) {
 						current = current - 1;
 						$(this).attr('current', current);
-						updateSkillPoints(1); // Incrementation of skillpoints.
+						skilltree.updateSkillPoints(1); // Incrementation of skillpoints.
 						that.renderAll();
 
 						$(document).trigger('skillsAfterChange', that);
@@ -220,6 +204,10 @@ var skilltree = {
 
 				if (abbr.length > 2)
 					elem.addClass('sm');
+				if (abbr.length >= 4)
+					elem.addClass('sm2');
+				if (abbr.length >= 6)
+					elem.addClass('sm3');
 
 				var color = '';
 				if (elem.hasAttr('abbr_color'))
@@ -345,7 +333,7 @@ var skilltree = {
 	// Checking, if upgrade of obj to level forLevel is possible
 	isDependencyMet: function (obj, forLevel) {
 		// If we don't have enough skill points.
-		if (!checkSkillPointsAvailability())
+		if (!skilltree.checkSkillPointsAvailability())
 			return false;
 
 		var dep = this.getDependency(obj, forLevel);
@@ -537,8 +525,24 @@ var skilltree = {
 	getSpriteBackgroundPosition: function (x, y) {
 		return '-' + (parseInt(x) * this.size) + 'px -' + (parseInt(y) * this.size) + 'px'
 	},
+	
+	// Check skill points availability before level-up skill.
+	checkSkillPointsAvailability: function () {
+		var availability = true;
+		if (this.skillpoints_dependency == true && this.skillpoints <= 0) {
+			availability = false;
+		}
+		return availability;
+	},
+	updateSkillPoints: function (value) {
+		if (this.skillpoints_dependency == true) {
+			this.skillpoints += value;
+		}
+		$('#skillpoints').text(this.skillpoints);
+		return this.skillpoints;
+	},
+	
 	// Export/import as JSON
-
 	export: function () {
 
 		var json = '{';
