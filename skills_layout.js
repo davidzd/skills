@@ -105,6 +105,12 @@ var skill = function(id){
         this.params['musthave'] = musthave;
         return this;
     }
+	
+	this.mustNotHave = function(mustNotHave){
+        mustNotHave = JSON.stringify(mustNotHave).replace(/"/g, '\'');
+        this.params['mustNotHave'] = mustNotHave.substr(1,mustNotHave.length - 2);
+        return this;
+    }
 
     this.dependency = function(dep){
         dep = JSON.stringify(dep).replace(/"/g, '\'');

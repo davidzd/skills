@@ -260,7 +260,6 @@ var skilltree = {
 		return name;
 	},
 	// Getting and evauluating complex dependency for obj's level.
-
 	getDependency: function (obj, level) {
 		if (!obj.hasAttr('dependency'))
 			return false;
@@ -302,7 +301,27 @@ var skilltree = {
 		else
 			return evalResult;
 	},
-	// Getting and evauluating complex dependency for obj's level.
+	// Getting and evauluating complex mustNotHave exclusion condition for obj's level.
+	getMustNotHave: function (obj, level) {
+		if (!obj.hasAttr('mustNotHave'))
+			return false;
+		try {
+			eval('var evalResult = {' + obj.attr('mustNotHave') + '}');
+		}
+		catch (e) {
+			obj.removeAttr('mustNotHave');
+			return false;
+		}
+
+		if (typeof level != 'undefined') {
+			if (typeof evalResult[level] != 'undefined')
+				return evalResult[level];
+			else
+				return false;
+		}
+		else
+			return evalResult;
+	},
 
 	getSprite: function (obj, level) {
 
@@ -339,6 +358,7 @@ var skilltree = {
 		var dep = this.getDependency(obj, forLevel);
 		var mustHave = obj.attr('musthave');
 		var group_dep = this.getGroupDependency(obj, forLevel);
+		var mustNotHave = this.getMustNotHave(obj, forLevel);
 
 		var group_dependencymet = true;
 		if (group_dep != false) {
@@ -355,6 +375,20 @@ var skilltree = {
 				}
 				if (!group_dependencymet)
 					break;
+			}
+		}
+		
+		var mustNotHave_dependencymet = true;
+		if (mustNotHave != false) {
+			for (var name in mustNotHave) {
+				var lvl2 = mustNotHave[name];
+				var lvl = this.getSkillLevel(name);
+				if (lvl >= parseInt(mustNotHave[name])) {
+					mustNotHave_dependencymet = false;
+				}
+				if (!mustNotHave_dependencymet){
+					break;
+				}
 			}
 		}
 		var dependencymet = true;
@@ -375,7 +409,7 @@ var skilltree = {
 			dependencymet = false;
 		}
 
-		if (dependencymet == true && group_dependencymet == true)
+		if (dependencymet == true && mustNotHave_dependencymet == true && group_dependencymet == true)
 			return true;
 		else
 			return false;

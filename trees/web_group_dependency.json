@@ -1,13 +1,13 @@
 {
     "html": {
         "name": "HTML",
-		"group": "basic",
+        "group": "basic",
         "max": 1,
         "pos": [200, 200],
         "abbr": "HTML",
-        "sprites":{
-            "1":[1,0],
-            "2":[2,0]
+        "sprites": {
+            "1": [1, 0],
+            "2": [2, 0]
         },
         "hint": [
             {
@@ -26,7 +26,7 @@
     },
     "css": {
         "name": "CSS",
-		"group": "basic",
+        "group": "basic",
         "sprite": [7, 6],
         "max": 1,
         "pos": [300, 200],
@@ -44,7 +44,7 @@
     },
     "sass": {
         "name": "SASS",
-		"group": "basic",
+        "group": "basic",
         "max": 1,
         "pos": [400, 200],
         "abbr": "SASS",
@@ -56,7 +56,7 @@
     },
     "less": {
         "name": "LESS",
-		"group": "advanced",
+        "group": "advanced",
         "max": 1,
         "pos": [500, 200],
         "abbr": "LESS",
@@ -64,11 +64,53 @@
             {
                 "text": "LESS"
             }
-        ]
+        ],
+        "mustNotHave": {
+            "1": {
+                "backbone": 1,
+                "bootstrap": 1
+            }
+        }
+    },
+    "backbone": {
+        "name": "Backbone",
+        "group": "advanced",
+        "max": 1,
+        "pos": [600, 200],
+        "abbr": "BkBe",
+        "hint": [
+            {
+                "text": "Backbone"
+            }
+        ],
+        "mustNotHave": {
+            "1": {
+                "less": 1,
+                "bootstrap": 1
+            }
+        }
+    },
+    "bootstrap": {
+        "name": "Bootstrap 3",
+        "group": "advanced",
+        "max": 1,
+        "pos": [700, 200],
+        "abbr": "BS3",
+        "hint": [
+            {
+                "text": "Bootstrap 3"
+            }
+        ],
+        "mustNotHave": {
+            "1": {
+                "less": 1,
+                "backbone": 1
+            }
+        }
     },
     "javascript": {
         "name": "JavaScript",
-		"group": "basic",
+        "group": "basic",
         "max": 1,
         "pos": [200, 300],
         "abbr": "JS",
@@ -77,7 +119,7 @@
                 "text": "JavaScript"
             }
         ],
-		"group_dependency": {
+        "group_dependency": {
             "1": {
                 "basic": 1
             }
@@ -85,7 +127,7 @@
     },
     "jquery": {
         "name": "jQuery",
-		"group": "basic",
+        "group": "basic",
         "max": 1,
         "pos": [300, 300],
         "abbr": "jQ",
@@ -94,9 +136,9 @@
                 "text": "jQuery + jQuery UI"
             }
         ],
-		"group_dependency": {
+        "group_dependency": {
             "1": {
-				"advanced": 1,
+                "advanced": 1,
                 "basic": 2
             }
         }
