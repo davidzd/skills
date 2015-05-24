@@ -42,6 +42,7 @@ var skilltree = {
 	buttons: '',
 	skillpoints_dependency: true,
 	skillpoints: 4,
+	group_dependency_modifier: [],
 	hint: '',
 	size: 80,
 	editorMode: false,
@@ -83,6 +84,7 @@ var skilltree = {
 							current = current + 1;
 							$(this).attr('current', current);
 							skilltree.updateSkillPoints(-1); // Decrementation of skillpoints.
+							that.render($(this));
 							that.renderAll();
 
 							$(document).trigger('skillsAfterChange', that);
@@ -102,6 +104,7 @@ var skilltree = {
 						current = current - 1;
 						$(this).attr('current', current);
 						skilltree.updateSkillPoints(1); // Incrementation of skillpoints.
+						that.render($(this));
 						that.renderAll();
 
 						$(document).trigger('skillsAfterChange', that);
@@ -359,12 +362,17 @@ var skilltree = {
 		var mustHave = obj.attr('musthave');
 		var group_dep = this.getGroupDependency(obj, forLevel);
 		var mustNotHave = this.getMustNotHave(obj, forLevel);
+		
+		
 
 		var group_dependencymet = true;
 		if (group_dep != false) {
 			for (var group in group_dep) {
 				// Count group active skill quantity.
 				var activeSkillFromGroup = 0;
+				if(skilltree.group_dependency_modifier[group]){
+					activeSkillFromGroup += skilltree.group_dependency_modifier[group];
+				}
 				this.buttons.filter('.active').each(function () {
 					if ($(this).attr('group') == group) {
 						activeSkillFromGroup++;
@@ -457,6 +465,9 @@ var skilltree = {
 				for (var lvl in group_dep) {
 					$.each(group_dep[lvl], function (group, lvl_required) {
 						var activeSkillFromGroup = 0;
+						if(skilltree.group_dependency_modifier[group]){
+							activeSkillFromGroup += skilltree.group_dependency_modifier[group];
+						}
 						$('.skill.active').each(function () {
 							if ($(this).attr('id') != my_id && $(this).attr('id') != id) {
 								if ($(this).attr('group') == group) {

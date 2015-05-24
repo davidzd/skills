@@ -28,6 +28,8 @@ skilltree.fromJSON = function (jsonObject, parentElement) {
         if (typeof elem.abbr_color != 'undefined')node.abbr_color(elem.abbr_color);
         if (typeof elem.group != 'undefined')node.group(elem.group);
 		if (typeof elem.group_dependency != 'undefined')node.group_dependency(elem.group_dependency);
+		if (typeof elem.unavailable != 'undefined')node.unavailable(elem.unavailable);
+		if (typeof elem.subgroup != 'undefined')node.subgroup(elem.subgroup);
 
         node.$(parentElement);
     }
@@ -55,7 +57,7 @@ skilltree.buildFromJSON = function(url,parentElement){
 skilltree.buildJSONOfElement = function(element){
     var json = {};
 
-    ['name','max','sprite','current','mustHave', 'mustNotHave','abbr','abbr_color','group'].forEach(function(el){
+    ['name','max','sprite','current','mustHave', 'mustNotHave','abbr','abbr_color','group','subgroup','unavailable'].forEach(function(el){
         if(element.attr(el))json[el]=element.attr(el);
     });
 

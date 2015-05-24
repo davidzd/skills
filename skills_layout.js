@@ -53,6 +53,16 @@ var skill = function(id){
         this.params['group'] = groupName;
         return this;
     }
+	
+	this.subgroup = function(subgroupName){
+        this.params['subgroup'] = subgroupName;
+        return this;
+    }
+	
+	this.unavailable = function(unavailable){
+        this.params['unavailable'] = unavailable;
+        return this;
+    }
 
     this.nohint = function(value){
         if(value!=false)this.params['nohint']='nohint';
