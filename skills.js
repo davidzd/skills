@@ -179,7 +179,7 @@ var skilltree = {
 					.show();
 		}
 
-		if (!obj.hasAttr('nohint') && obj.hasAttr('dependency') && !obj.hasClass('available') && current < obj.attrInt('max')) {
+		if (!obj.hasAttr('nohint') && (obj.hasAttr('dependency') || obj.hasAttr('group_dependency')) && !obj.hasClass('available') && current < obj.attrInt('max')) {
 			this.hint.append(this.buildDependencyHint(obj));
 		}
 
@@ -241,6 +241,15 @@ var skilltree = {
 			var metclass = this.getSkillLevel(name) >= level;
 			deptext += this.language.level.format(this.language.levelTitle.format(this.getSkillName(name), level), metclass ? 'met' : 'unmet');
 		}
+		
+		var group_deps = this.getGroupDependency(obj, nextLevel);
+		for (name in group_deps) {
+			level = group_deps[name];
+			var metclass = this.getSkillLevel(name) >= level;
+			var desc = 'Skills of group "' + name + '" required :';
+			deptext += this.language.level.format(this.language.levelTitle.format(desc, level), metclass ? 'met' : 'unmet');
+		}
+		
 		return this.language.req.format(deptext, this.language.reqTitle.format(nextLevel));
 
 	},
