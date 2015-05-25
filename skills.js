@@ -34,7 +34,11 @@ String.prototype.randomColor = function () {
 
 hexColorToGrayscale = function (str) {
 	str = str.substr(1, 6);
-	return (parseInt(str.substr(0, 2), 16) + parseInt(str.substr(2, 2), 16) + parseInt(str.substr(4, 2), 16)) / 3;
+	var r = parseInt(str.substr(0, 2), 16);
+	var g = parseInt(str.substr(2, 2), 16);
+	var b = parseInt(str.substr(4, 2), 16);
+	var yiq = ((r*299)+(g*587)+(b*114))/1000;
+	return yiq;
 }
 
 
