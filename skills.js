@@ -134,9 +134,13 @@ var skilltree = {
 			// Moving the tooltip
 
 			this.buttons.mousemove(function (e) {
+				var pagey = e.pageY;
+				if($(window).height() < (e.pageY + that.hint.innerHeight())){
+					pagey = e.pageY - (that.hint.innerHeight() - ($(window).height() - e.pageY));
+				}
 				that.hint.css({
 					left: e.pageX,
-					top: e.pageY
+					top: pagey
 				});
 			})
 

@@ -6,6 +6,9 @@ the LESS CSSS preprocessor.
   margin: 0;
   padding: 0;
 }
+.clear {
+  clear: both;
+}
 body {
   background: #444;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACcklEQVR4nO3bSVJcQQwE0L4MBsLYpid6ZLBphvtfCHYO6i1+Rq+0QAstMvSrSyiUGqqK2fvb8eNuff1f5rcXA16vrge8ufs54Od/m8nv314PA364Xwx4v/s9qff3kv70vJ3UPz4sBzz7Cr6jtAOqDaiWmRw1B6h/fdkP+Hi4HbAc3W1/nbVeDv99Wg/4/jif3M8cZQ4w53QEVBtQLe0AOSTnD/s/A14uLge8Wl4NWI6/nHYDdj/rshw2J6WcoT2L+Y8B27d0BFQbUC3tAOusnJVzcky9dVbOyfHEefXu5/fONuYwc1RHQLUB1dIOsFeWY2meNifI2e3mZsBy1hzk9+YQ67rrU87Q3o6AagOqpR2QeunE6dTbi+0z3M+6nfoC677Yv8/f6wioNqBa2gFyTpx698Q5zxes49Zp676cfXpcTf6+Z4aeSdrXdARUG1At7QDrejofkIP2AXI29QWuT/O7nNYec0jqKzoCqg2olnZAuu+Xs9b9lEPkoHVfTnvv4P7WffsOsX+POacjoNqAamkHyFE5J8ety+e+6Uk5JK237pszXO95g/t3BFQbUC3tgHRmpj698UlnfPYJcjzd52uf+6l3lul3gkZAtQHV0g5I9/dyyvt/9alup9nBXt/90jtAOa6+zwOMgGoDqqUdICc8V7fX9vt0V+h6OW2f4PnAue8VEu63wkZAtQHV0g6wrlqXnZ/tvZ0VEudcb6+eZhFzguudJZxdzEkdAdUGVEs7QI7IUbGcTrOBfYWzh5yWw+l/ftLbZPXmjI6AagOqpR1gL+78bo5wXk93femNz7nzvvaI7WPMKeKOgGoDquXbO+ATIF9D9wrQ0EMAAAAASUVORK5CYII=');
@@ -14,8 +17,23 @@ body {
   width: 320px;
   margin: auto;
 }
+.skillpoints_content {
+  background-color: #444;
+  color: #fff;
+  margin: 10px;
+  padding: 10px;
+}
 #skillpoints {
   color: #ffffff;
+}
+.mainSkillTreeContener {
+  display: block;
+  margin: auto;
+  /*width: 100%;*/
+}
+.skill_group {
+  float: left;
+  width: 350px;
 }
 .skill {
   position: relative;
@@ -103,7 +121,7 @@ body {
   border-radius: 3px;
   padding: 6px 12px 24px 12px;
   background: rgba(0, 0, 0, 0.9);
-  max-width: 200px;
+  max-width: 400px;
   color: #ccc;
   text-shadow: 0 1px 1px #000;
   box-shadow: 0 0 0 1px #000000, 0 0 0 2px rgba(255, 255, 255, 0.2);

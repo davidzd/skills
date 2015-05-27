@@ -1,33 +1,34 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <title>SkillTree</title>
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="skills.js"></script>
-    <script type="text/javascript" src="skills_layout.js"></script>
-    <script type="text/javascript" src="skills_fromJSON.js"></script>
-    <script type="text/javascript" src="skills_toURL.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
-</head>
-<body>
-	<div id="skillpoints">4</div>
-<div id="st"></div>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>SkillTree</title>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="skills.js"></script>
+		<script type="text/javascript" src="skills_layout.js"></script>
+		<script type="text/javascript" src="skills_fromJSON.js"></script>
+		<script type="text/javascript" src="skills_toURL.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+	</head>
+	<body>
+		<div class="skillpoints_content">
+		Skill points: <span id="skillpoints">4</span>
+		</div>
+        <div id="st" class="mainSkillTreeContener"></div>
+	</body>
 
-</body>
+	<script type="text/javascript">
 
-<script type="text/javascript">
+		$(function () {
+			//hardcoded variables
+			var group_dependency_modifier = new Array;
+			group_dependency_modifier['Physique'] = 0;
+			group_dependency_modifier['Esprit'] = 0;
+			skilltree.group_dependency_modifier = group_dependency_modifier;
+			skilltree.buildFromJSON('trees/web_group_dependency.json',$('#st'));
+			//skilltree.buildFromJSON('trees/custom.json',$('#st'));
+		})
 
-    $(function(){
-        //hardcoded variables
-        var group_dependency_modifier = new Array;
-        group_dependency_modifier['Physique'] = 0;
-        group_dependency_modifier['Esprit'] = 0;
-        skilltree.group_dependency_modifier = group_dependency_modifier;
-        //skilltree.buildFromJSON('trees/web_group_dependency.json',$('#st'));
-        skilltree.buildFromJSON('trees/custom.json',$('#st'));
-    })
-
-</script>
+	</script>
 
 </html>

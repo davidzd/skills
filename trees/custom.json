@@ -1,6 +1,5 @@
 {
     "1": {
-        "pos": [100, 200],
         "name": "Aveuglement",
         "group": "Physique",
         "subgroup": "1",
@@ -17,7 +16,6 @@
         }
     },
     "2": {
-        "pos": [200, 200],
         "name": "Contacts privilégiés",
         "group": "Physique",
         "subgroup": "1",
@@ -29,7 +27,6 @@
             }]
     },
     "3": {
-        "pos": [300, 200],
         "name": "Crochetage & évasion",
         "group": "Physique",
         "subgroup": "1",
@@ -41,7 +38,6 @@
             }]
     },
     "18": {
-        "pos": [400, 200],
         "name": "Décryptage",
         "group": "Esprit",
         "subgroup": "3",
@@ -53,7 +49,6 @@
             }]
     },
     "4": {
-        "pos": [500, 200],
         "name": "Désarmement",
         "group": "Physique",
         "subgroup": "2",
@@ -65,7 +60,6 @@
             }]
     },
     "5": {
-        "pos": [600, 200],
         "name": "Destruction",
         "group": "Physique",
         "subgroup": "2",
@@ -82,7 +76,6 @@
         }
     },
     "20": {
-        "pos": [100, 400],
         "name": "Écriture de parchemin profane",
         "group": "Esprit",
         "subgroup": "4",
@@ -99,7 +92,6 @@
         }
     },
     "11": {
-        "pos": [200, 400],
         "name": "Élu",
         "group": "Esprit",
         "subgroup": "5",
@@ -117,7 +109,6 @@
         }
     },
     "6": {
-        "pos": [300, 400],
         "name": "Forge",
         "group": "Physique",
         "subgroup": "3",
@@ -129,7 +120,6 @@
             }]
     },
     "21": {
-        "pos": [400, 400],
         "name": "Herboristerie",
         "group": "Physique",
         "subgroup": "3",
@@ -141,7 +131,6 @@
             }]
     },
     "16": {
-        "pos": [500, 400],
         "name": "Lanceur de sort divin",
         "group": "Esprit",
         "subgroup": "6",
@@ -159,7 +148,6 @@
         }
     },
     "17": {
-        "pos": [600, 400],
         "name": "Lanceur de sort profane",
         "group": "Esprit",
         "subgroup": "4",
@@ -177,7 +165,6 @@
         }
     },
     "15": {
-        "pos": [100, 600],
         "name": "Maître de rituel",
         "group": "Esprit",
         "subgroup": "6",
@@ -189,7 +176,6 @@
             }]
     },
     "22": {
-        "pos": [200, 600],
         "name": "Mort feinte",
         "group": "Physique",
         "subgroup": "1",
@@ -206,7 +192,6 @@
         }
     },
     "7": {
-        "pos": [300, 600],
         "name": "Parade",
         "group": "Physique",
         "subgroup": "2",
@@ -223,7 +208,6 @@
         }
     },
     "14": {
-        "pos": [400, 600],
         "name": "Pieux",
         "group": "Esprit",
         "subgroup": "6",
@@ -235,7 +219,6 @@
             }]
     },
     "8": {
-        "pos": [500, 600],
         "name": "Premier Soins",
         "group": "Physique",
         "subgroup": "2",
@@ -247,7 +230,6 @@
             }]
     },
     "9": {
-        "pos": [600, 600],
         "name": "Robustesse",
         "group": "Physique",
         "subgroup": "2",
@@ -264,7 +246,6 @@
         }
     },
     "23": {
-        "pos": [100, 800],
         "name": "Vigueur",
         "group": "Physique",
         "subgroup": "2",

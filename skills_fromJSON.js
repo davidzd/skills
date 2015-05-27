@@ -1,4 +1,5 @@
 skilltree.fromJSON = function (jsonObject, parentElement) {
+	var group_parentElement = false;
     for (var id in jsonObject) {
 
         var elem = jsonObject[id];
@@ -26,11 +27,18 @@ skilltree.fromJSON = function (jsonObject, parentElement) {
         if (typeof elem.param != 'undefined')for (var idx in elem.param)node.param(idx, elem.param[idx]);
         if (typeof elem.abbr != 'undefined')node.abbr(elem.abbr);
         if (typeof elem.abbr_color != 'undefined')node.abbr_color(elem.abbr_color);
-        if (typeof elem.group != 'undefined')node.group(elem.group);
+        if (typeof elem.group != 'undefined'){
+			node.group(elem.group);
+			group_parentElement = elem.group;
+			if ( !$( "#" + group_parentElement ).length ) {
+				$( "#st" ).append( '<div id="' + group_parentElement + '" class="skill_group"></div>' );
+			}
+			parentElement = $( '#' + group_parentElement);
+		}
 		if (typeof elem.group_dependency != 'undefined')node.group_dependency(elem.group_dependency);
 		if (typeof elem.unavailable != 'undefined')node.unavailable(elem.unavailable);
 		if (typeof elem.subgroup != 'undefined')node.subgroup(elem.subgroup);
-
+		
         node.$(parentElement);
     }
     return this;
