@@ -1,4 +1,5 @@
 skilltree.fromJSON = function (jsonObject, parentElement) {
+	var group_parentElement = false;
     for (var id in jsonObject) {
 
         var elem = jsonObject[id];
@@ -21,11 +22,23 @@ skilltree.fromJSON = function (jsonObject, parentElement) {
         if (typeof elem.current != 'undefined')node.current(elem.current);
         if (typeof elem.mustHave != 'undefined')node.mustHave(elem.mustHave);
         if (typeof elem.dependency != 'undefined')node.dependency(elem.dependency);
+		if (typeof elem.mustNotHave != 'undefined')node.mustNotHave(elem.mustNotHave);
         if (typeof elem.className != 'undefined')for (var idx in elem.className)node.className(elem.className[idx]);
         if (typeof elem.param != 'undefined')for (var idx in elem.param)node.param(idx, elem.param[idx]);
         if (typeof elem.abbr != 'undefined')node.abbr(elem.abbr);
         if (typeof elem.abbr_color != 'undefined')node.abbr_color(elem.abbr_color);
-
+        if (typeof elem.group != 'undefined'){
+			node.group(elem.group);
+			group_parentElement = elem.group;
+			if ( !$( "#" + group_parentElement ).length ) {
+				$( "#st" ).append( '<div id="' + group_parentElement + '" class="skill_group"><h2>'+group_parentElement+'</h2></div>' );
+			}
+			parentElement = $( '#' + group_parentElement);
+		}
+		if (typeof elem.group_dependency != 'undefined')node.group_dependency(elem.group_dependency);
+		if (typeof elem.unavailable != 'undefined')node.unavailable(elem.unavailable);
+		if (typeof elem.subgroup != 'undefined')node.subgroup(elem.subgroup);
+		
         node.$(parentElement);
     }
     return this;
@@ -52,7 +65,7 @@ skilltree.buildFromJSON = function(url,parentElement){
 skilltree.buildJSONOfElement = function(element){
     var json = {};
 
-    ['name','max','sprite','current','mustHave','abbr','abbr_color'].forEach(function(el){
+    ['name','max','sprite','current','mustHave', 'mustNotHave','abbr','abbr_color','group','subgroup','unavailable'].forEach(function(el){
         if(element.attr(el))json[el]=element.attr(el);
     });
 

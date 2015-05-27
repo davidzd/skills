@@ -27,6 +27,12 @@ You can add attributes to it - "current" and "max"
 
 This will produce a skill that is clickable 3 times and already clicked once.
 
+[Optional] You can set skillpoints dependency:
+	var skilltree = {
+	buttons: '',
+	skillpoints_dependency: true,
+	skillpoints: 4,
+
 ## Sprite
 
 You can set a skill sprite by setting "sprite" parameter like this:
@@ -180,6 +186,12 @@ mustHave sets simple dependency and dependency method sets complex dependency. N
     skill.mustHave('otherNode');
     skill.dependency({1:{'otherNode':2},2:{'otherNode':5});
 
+mustNotHave is purely the inverse of mustHave.
+	skill.mustNotHave({1:{'otherNode':2},2:{'otherNode':5});
+
+group_dependency: Skill can be dependant from a quantity of selected skills into a group.
+	skill.group_dependency({1:{'group1':2},2:{'group2':5});
+
 
 There is a hint shown in the description for skills which dependency is not met. To disable the hint for the particular
 element - use "nohint" property
@@ -257,13 +269,16 @@ Possible JSON values are:
  - name - string
  - max - integer number
  - pos - an [x, y] array
+ - group - string
  - hint - an array of objects. Each object have "text" parameter. Additionally it cah have string or integer level OR "type":"raw".
  - sprite - an [x,y] array
  - sprites - an object, each property of which is a number having an [x,y] array value.
  - className - an array of strings
  - param - an name:value object ("param":{"border":"none","title":"Hello"}
  - musthave - a string
+ - mustnothave - a string
  - dependency - an level:dependency object, where dependency is "skill id":level object.
+ - group dependency - an group level:dependency object, where dependency is "total skills selected in group":level object
  - nohint - true if you dont want autohint to be shown
 
 ## Importing and exporting data

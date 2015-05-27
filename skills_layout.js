@@ -48,6 +48,21 @@ var skill = function(id){
         this.params['max'] = level;
         return this;
     }
+    
+    this.group = function(groupName){
+        this.params['group'] = groupName;
+        return this;
+    }
+	
+	this.subgroup = function(subgroupName){
+        this.params['subgroup'] = subgroupName;
+        return this;
+    }
+	
+	this.unavailable = function(unavailable){
+        this.params['unavailable'] = unavailable;
+        return this;
+    }
 
     this.nohint = function(value){
         if(value!=false)this.params['nohint']='nohint';
@@ -100,10 +115,22 @@ var skill = function(id){
         this.params['musthave'] = musthave;
         return this;
     }
+	
+	this.mustNotHave = function(mustNotHave){
+        mustNotHave = JSON.stringify(mustNotHave).replace(/"/g, '\'');
+        this.params['mustNotHave'] = mustNotHave.substr(1,mustNotHave.length - 2);
+        return this;
+    }
 
     this.dependency = function(dep){
         dep = JSON.stringify(dep).replace(/"/g, '\'');
         this.params['dependency'] = dep.substr(1,dep.length - 2);
+        return this;
+    }
+	
+	this.group_dependency = function(dep){
+        dep = JSON.stringify(dep).replace(/"/g, '\'');
+        this.params['group_dependency'] = dep.substr(1,dep.length - 2);
         return this;
     }
 
