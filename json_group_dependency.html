@@ -22,11 +22,10 @@
 		$(function () {
 			//hardcoded variables
 			var group_dependency_modifier = new Array;
-			group_dependency_modifier['Physique'] = 0;
-			group_dependency_modifier['Esprit'] = 0;
+			group_dependency_modifier['basic'] = 0;
+			group_dependency_modifier['advanced'] = 0;
 			skilltree.group_dependency_modifier = group_dependency_modifier;
-			skilltree.buildFromJSON('trees/web_group_dependency.json',$('#st'));
-			//skilltree.buildFromJSON('trees/custom.json',$('#st'));
+			skilltree.buildFromJSON('trees/web_group_dependency_nopos.json',$('#st'));
 		})
 
 	</script>

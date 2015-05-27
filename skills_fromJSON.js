@@ -31,7 +31,7 @@ skilltree.fromJSON = function (jsonObject, parentElement) {
 			node.group(elem.group);
 			group_parentElement = elem.group;
 			if ( !$( "#" + group_parentElement ).length ) {
-				$( "#st" ).append( '<div id="' + group_parentElement + '" class="skill_group"></div>' );
+				$( "#st" ).append( '<div id="' + group_parentElement + '" class="skill_group"><h2>'+group_parentElement+'</h2></div>' );
 			}
 			parentElement = $( '#' + group_parentElement);
 		}
